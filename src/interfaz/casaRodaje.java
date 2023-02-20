@@ -4,7 +4,10 @@
  */
 package interfaz;
 
+import java.util.concurrent.Semaphore;
+import main.Spinner;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerModel;
 import main.ProductorIntro;
 
 /**
@@ -13,15 +16,31 @@ import main.ProductorIntro;
  */
 public class casaRodaje extends javax.swing.JFrame {
            boolean iniciar = true;
-            int maxIntro = 0;
+           int maxEmpleadores = 13;
+           int inicio,creditos,cierre,intro,plot;
+           public static Semaphore drive_Intro = new Semaphore(30);
+           ProductorIntro pIntro = new ProductorIntro(drive_Intro); 
+           
 
            /**
             * Creates new form casaRodaje
             */
            public casaRodaje() {
                       initComponents();
+                      this.checkIntro.setSelected(iniciar);
                       this.setLocationRelativeTo(null);
                       this.setResizable(false);
+           }
+           
+           public boolean maximo(){
+                      int usoEmpleadores = inicio + creditos + cierre + intro + plot;
+                      if ( usoEmpleadores> maxEmpleadores){
+                                 JOptionPane.showMessageDialog(null,"Maximo de empleadores excedido");
+                                 return false;
+                      }else{
+                                 return true;
+                      }
+                      
            }
 
            /**
@@ -33,6 +52,7 @@ public class casaRodaje extends javax.swing.JFrame {
            // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
            private void initComponents() {
 
+                      jMenuItem1 = new javax.swing.JMenuItem();
                       jPanel1 = new javax.swing.JPanel();
                       jPanel2 = new javax.swing.JPanel();
                       jLabel1 = new javax.swing.JLabel();
@@ -41,16 +61,15 @@ public class casaRodaje extends javax.swing.JFrame {
                       jLabel4 = new javax.swing.JLabel();
                       jLabel5 = new javax.swing.JLabel();
                       jLabel6 = new javax.swing.JLabel();
-                      jSpinner1 = new javax.swing.JSpinner();
-                      jSpinner2 = new javax.swing.JSpinner();
-                      jSpinner3 = new javax.swing.JSpinner();
-                      jSpinner4 = new javax.swing.JSpinner();
-                      jSpinner5 = new javax.swing.JSpinner();
+                      Spinner_plottwist = new javax.swing.JSpinner();
+                      Spinner_Intro = new javax.swing.JSpinner();
+                      Spinner_Inicio = new javax.swing.JSpinner();
+                      Spinner_cierre = new javax.swing.JSpinner();
                       jLabel7 = new javax.swing.JLabel();
                       jScrollPane6 = new javax.swing.JScrollPane();
                       jTextPane6 = new javax.swing.JTextPane();
                       jCheckBox1 = new javax.swing.JCheckBox();
-                      jCheckBox2 = new javax.swing.JCheckBox();
+                      checkIntro = new javax.swing.JCheckBox();
                       jCheckBox3 = new javax.swing.JCheckBox();
                       jCheckBox4 = new javax.swing.JCheckBox();
                       jCheckBox5 = new javax.swing.JCheckBox();
@@ -74,7 +93,7 @@ public class casaRodaje extends javax.swing.JFrame {
                       jTextPane12 = new javax.swing.JTextPane();
                       jScrollPane13 = new javax.swing.JScrollPane();
                       jTextPane13 = new javax.swing.JTextPane();
-                      Simulacion = new javax.swing.JButton();
+                      Boton_Parar = new javax.swing.JButton();
                       jLabel15 = new javax.swing.JLabel();
                       jScrollPane14 = new javax.swing.JScrollPane();
                       jTextPane14 = new javax.swing.JTextPane();
@@ -92,6 +111,10 @@ public class casaRodaje extends javax.swing.JFrame {
                       outputCreditos = new javax.swing.JLabel();
                       outputInicio = new javax.swing.JLabel();
                       outputCierre = new javax.swing.JLabel();
+                      Boton_Simulacion = new javax.swing.JButton();
+                      Spinner_Creditos = new javax.swing.JSpinner();
+
+                      jMenuItem1.setText("jMenuItem1");
 
                       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
                       getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -122,11 +145,38 @@ public class casaRodaje extends javax.swing.JFrame {
 
                       jLabel6.setText("plot twist");
                       getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, -1, -1));
-                      getContentPane().add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 50, -1));
-                      getContentPane().add(jSpinner2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 50, -1));
-                      getContentPane().add(jSpinner3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 50, -1));
-                      getContentPane().add(jSpinner4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 50, -1));
-                      getContentPane().add(jSpinner5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 50, -1));
+
+                      Spinner_plottwist.setModel(new javax.swing.SpinnerNumberModel(0, 0, 13, 1));
+                      Spinner_plottwist.addChangeListener(new javax.swing.event.ChangeListener() {
+                                 public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                                            Spinner_plottwistStateChanged(evt);
+                                 }
+                      });
+                      getContentPane().add(Spinner_plottwist, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 50, -1));
+
+                      Spinner_Intro.setModel(new javax.swing.SpinnerNumberModel(0, 0, 13, 1));
+                      Spinner_Intro.addChangeListener(new javax.swing.event.ChangeListener() {
+                                 public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                                            Spinner_IntroStateChanged(evt);
+                                 }
+                      });
+                      getContentPane().add(Spinner_Intro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 50, -1));
+
+                      Spinner_Inicio.setModel(new javax.swing.SpinnerNumberModel(0, 0, 13, 1));
+                      Spinner_Inicio.addChangeListener(new javax.swing.event.ChangeListener() {
+                                 public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                                            Spinner_InicioStateChanged(evt);
+                                 }
+                      });
+                      getContentPane().add(Spinner_Inicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 50, -1));
+
+                      Spinner_cierre.setModel(new javax.swing.SpinnerNumberModel(0, 0, 13, 1));
+                      Spinner_cierre.addChangeListener(new javax.swing.event.ChangeListener() {
+                                 public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                                            Spinner_cierreStateChanged(evt);
+                                 }
+                      });
+                      getContentPane().add(Spinner_cierre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 50, -1));
 
                       jLabel7.setText("Empleados disponibles");
                       getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
@@ -143,13 +193,13 @@ public class casaRodaje extends javax.swing.JFrame {
                       });
                       getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, 80, -1));
 
-                      jCheckBox2.setText("30 GB /");
-                      jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+                      checkIntro.setText("30 GB /");
+                      checkIntro.addActionListener(new java.awt.event.ActionListener() {
                                  public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                            jCheckBox2ActionPerformed(evt);
+                                            checkIntroActionPerformed(evt);
                                  }
                       });
-                      getContentPane().add(jCheckBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 70, -1));
+                      getContentPane().add(checkIntro, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 70, -1));
 
                       jCheckBox3.setText("25 GB /");
                       jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
@@ -221,13 +271,13 @@ public class casaRodaje extends javax.swing.JFrame {
 
                       getContentPane().add(jScrollPane13, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 60, -1));
 
-                      Simulacion.setText("Simulacion");
-                      Simulacion.addActionListener(new java.awt.event.ActionListener() {
+                      Boton_Parar.setText("Parar");
+                      Boton_Parar.addActionListener(new java.awt.event.ActionListener() {
                                  public void actionPerformed(java.awt.event.ActionEvent evt) {
-                                            SimulacionActionPerformed(evt);
+                                            Boton_PararActionPerformed(evt);
                                  }
                       });
-                      getContentPane().add(Simulacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 440, 120, -1));
+                      getContentPane().add(Boton_Parar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 440, 120, -1));
 
                       jLabel15.setText("temporadas");
                       getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, -1, -1));
@@ -282,6 +332,22 @@ public class casaRodaje extends javax.swing.JFrame {
                       outputCierre.setText("0");
                       getContentPane().add(outputCierre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 50, 20));
 
+                      Boton_Simulacion.setText("Simulacion");
+                      Boton_Simulacion.addActionListener(new java.awt.event.ActionListener() {
+                                 public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                            Boton_SimulacionActionPerformed(evt);
+                                 }
+                      });
+                      getContentPane().add(Boton_Simulacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 440, 120, -1));
+
+                      Spinner_Creditos.setModel(new javax.swing.SpinnerNumberModel(0, 0, 13, 1));
+                      Spinner_Creditos.addChangeListener(new javax.swing.event.ChangeListener() {
+                                 public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                                            Spinner_CreditosStateChanged(evt);
+                                 }
+                      });
+                      getContentPane().add(Spinner_Creditos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 50, -1));
+
                       pack();
            }// </editor-fold>//GEN-END:initComponents
 
@@ -289,11 +355,16 @@ public class casaRodaje extends javax.swing.JFrame {
                       // TODO add your handling code here:
            }//GEN-LAST:event_jCheckBox1ActionPerformed
 
-           private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
+           private void checkIntroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkIntroActionPerformed
                       // TODO add your handling code here:\
-                      ProductorIntro pIntro = new ProductorIntro();
-                      pIntro.sinDrive();
-           }//GEN-LAST:event_jCheckBox2ActionPerformed
+                      //ProductorIntro pIntro = new ProductorIntro();  
+                      if(checkIntro.isSelected()){
+                                 pIntro.setDrive(30);
+                      }else{
+                                 pIntro.setDrive(0);
+                      }
+                      
+           }//GEN-LAST:event_checkIntroActionPerformed
 
            private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
                       // TODO add your handling code here:
@@ -307,22 +378,38 @@ public class casaRodaje extends javax.swing.JFrame {
                       // TODO add your handling code here:
            }//GEN-LAST:event_jCheckBox5ActionPerformed
 
-           private void SimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimulacionActionPerformed
-                      iniciar = true;
-                      ProductorIntro pIntro = new ProductorIntro();
- 
-                      Thread hilo = new Thread(){
+           private void Boton_PararActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_PararActionPerformed
+                      //iniciar = true;
+                      //ProductorIntro pIntro = new ProductorIntro();
+                      
+                   
+           }//GEN-LAST:event_Boton_PararActionPerformed
+
+           private void Boton_SimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_SimulacionActionPerformed
+                      // TODO add your handling code here:
+                      boolean continuar =this.maximo();
+                      if(continuar == false){
+                                 
+                      }else if (continuar == true){
+                                 iniciar = true;
+                                 this.Boton_Simulacion.setEnabled(false);
+                                 pIntro.setProductor_Intro((int) Spinner_Intro.getValue());
+                                 pIntro.introCreada();
+                                 pIntro.start();
+                                 
+                                 Thread hilo = new Thread(){
                                  public void run(){
+                                            
                                             for( ; ;){
                                                        if(iniciar == true){
-                                                                  try{
+                                                                  try{                                                                               
                                                                              Thread.sleep(1000);
-                                                                             pIntro.introCreada();
-                                                                             outputIntro.setText(Integer.toString(pIntro.getIntros()));
-                                                                             if(pIntro.getDrive() == 0){
-                                                                                        System.out.println(pIntro.getDrive());
+                                                                             outputIntro.setText(Integer.toString(pIntro.drive_Intro.availablePermits()));
+                                                                             if(pIntro.getDrive() ==0){
+                                                                                        
                                                                              }else if(pIntro.getIntros() >= pIntro.getDrive()){
-                                                                                        break;
+                                                                                      iniciar = false;
+                                                                                      
                                                                              }
                                                                              
                                                                   }catch(InterruptedException e){
@@ -332,8 +419,34 @@ public class casaRodaje extends javax.swing.JFrame {
                                             }
                                  }
                       };hilo.start();
-                   
-           }//GEN-LAST:event_SimulacionActionPerformed
+                      }
+                      
+           }//GEN-LAST:event_Boton_SimulacionActionPerformed
+
+           private void Spinner_IntroStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_Spinner_IntroStateChanged
+                      // TODO add your handling code here:
+                      intro = (int) Spinner_Intro.getValue();
+           }//GEN-LAST:event_Spinner_IntroStateChanged
+
+           private void Spinner_CreditosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_Spinner_CreditosStateChanged
+                      // TODO add your handling code here:
+                      creditos = (int) Spinner_Creditos.getValue();
+           }//GEN-LAST:event_Spinner_CreditosStateChanged
+
+           private void Spinner_InicioStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_Spinner_InicioStateChanged
+                      // TODO add your handling code here:
+                      inicio = (int) Spinner_Inicio.getValue();
+           }//GEN-LAST:event_Spinner_InicioStateChanged
+
+           private void Spinner_cierreStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_Spinner_cierreStateChanged
+                      // TODO add your handling code here:
+                      cierre = (int) Spinner_cierre.getValue();
+           }//GEN-LAST:event_Spinner_cierreStateChanged
+
+           private void Spinner_plottwistStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_Spinner_plottwistStateChanged
+                      // TODO add your handling code here:
+                      plot = (int) Spinner_plottwist.getValue();
+           }//GEN-LAST:event_Spinner_plottwistStateChanged
 
            /**
             * @param args the command line arguments
@@ -371,9 +484,15 @@ public class casaRodaje extends javax.swing.JFrame {
            }
 
            // Variables declaration - do not modify//GEN-BEGIN:variables
-           private javax.swing.JButton Simulacion;
+           private javax.swing.JButton Boton_Parar;
+           private javax.swing.JButton Boton_Simulacion;
+           private javax.swing.JSpinner Spinner_Creditos;
+           private javax.swing.JSpinner Spinner_Inicio;
+           private javax.swing.JSpinner Spinner_Intro;
+           private javax.swing.JSpinner Spinner_cierre;
+           private javax.swing.JSpinner Spinner_plottwist;
+           private javax.swing.JCheckBox checkIntro;
            private javax.swing.JCheckBox jCheckBox1;
-           private javax.swing.JCheckBox jCheckBox2;
            private javax.swing.JCheckBox jCheckBox3;
            private javax.swing.JCheckBox jCheckBox4;
            private javax.swing.JCheckBox jCheckBox5;
@@ -395,6 +514,7 @@ public class casaRodaje extends javax.swing.JFrame {
            private javax.swing.JLabel jLabel7;
            private javax.swing.JLabel jLabel8;
            private javax.swing.JLabel jLabel9;
+           private javax.swing.JMenuItem jMenuItem1;
            private javax.swing.JPanel jPanel1;
            private javax.swing.JPanel jPanel2;
            private javax.swing.JScrollPane jScrollPane10;
@@ -408,11 +528,6 @@ public class casaRodaje extends javax.swing.JFrame {
            private javax.swing.JScrollPane jScrollPane6;
            private javax.swing.JScrollPane jScrollPane8;
            private javax.swing.JScrollPane jScrollPane9;
-           private javax.swing.JSpinner jSpinner1;
-           private javax.swing.JSpinner jSpinner2;
-           private javax.swing.JSpinner jSpinner3;
-           private javax.swing.JSpinner jSpinner4;
-           private javax.swing.JSpinner jSpinner5;
            private javax.swing.JSpinner jSpinner6;
            private javax.swing.JTextPane jTextPane10;
            private javax.swing.JTextPane jTextPane11;
