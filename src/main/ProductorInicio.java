@@ -54,6 +54,10 @@ public class ProductorInicio  extends Thread{
                       sueldo = 24*7*Productor_Inicio;
                       return sueldo;
            }
+           
+           public void reducir(){
+                      drive_Inicio.release();
+           }
 
            
            

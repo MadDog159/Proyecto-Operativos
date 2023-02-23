@@ -5,14 +5,16 @@
 package interfaz;
 
 import java.util.concurrent.Semaphore;
-import main.Spinner;
 import javax.swing.JOptionPane;
-import javax.swing.SpinnerModel;
+import main.Ensambladores;
+import static main.Ensambladores.capitulo_creado;
+import static main.Ensambladores.capitulo_creadoPlot;
 import main.ProductorCierre;
 import main.ProductorCreditos;
 import main.ProductorInicio;
 import main.ProductorIntro;
 import main.ProductorPlotTwist;
+import main.ProjectManager;
 
 /**
  *
@@ -20,14 +22,21 @@ import main.ProductorPlotTwist;
  */
 public class casaRodaje extends javax.swing.JFrame {
            boolean iniciar = true;
+           int x = 0;
            int maxEmpleadores = 13;
            double GastosTotales;
-           int inicio,creditos,cierre,intro,plot;           
+           int inicio,creditos,cierre,intro,plot,ensamble;       
+           public static int parteInicio,parteCreditos,parteCierre,parteIntro,partePlot;
+           public static boolean contador; 
+           public static boolean Rick_Morty;
+           public static boolean reviews;
            public static Semaphore drive_Intro = new Semaphore(Inicio_Sistema.tamanoIntro);
            public static Semaphore drive_Creditos = new Semaphore(Inicio_Sistema.tamanoCreditos);
            public static Semaphore drive_Inicio = new Semaphore(Inicio_Sistema.tamanoInicio);
            public static Semaphore drive_Cierre = new Semaphore(Inicio_Sistema.tamanoCierre);
            public static Semaphore drive_Plot = new Semaphore(Inicio_Sistema.tamanoPlot);
+           
+           public static Semaphore drive_Restantes = new Semaphore(1);
            
            
            /**
@@ -35,7 +44,7 @@ public class casaRodaje extends javax.swing.JFrame {
             */
            public casaRodaje() {
                       initComponents();
-                      //this.checkIntro.setSelected(iniciar);
+                      outputMAX.setText(Integer.toString(maxEmpleadores));
                       this.setLocationRelativeTo(null);
                       this.setResizable(false);
                       
@@ -43,7 +52,7 @@ public class casaRodaje extends javax.swing.JFrame {
            
            
            public boolean maximo(){
-                      int usoEmpleadores = inicio + creditos + cierre + intro + plot;
+                      int usoEmpleadores = inicio + creditos + cierre + intro + plot + ensamble;
                       if ( usoEmpleadores> maxEmpleadores){
                                  JOptionPane.showMessageDialog(null,"Maximo de empleadores excedido");
                                  return false;
@@ -67,6 +76,9 @@ public class casaRodaje extends javax.swing.JFrame {
                       }else if (plot == 0){
                                  JOptionPane.showMessageDialog(null,"DESPEDIDO, INEFICIENTE, como puedes tener un departamiento sin nadie!!");
                                  return false;
+                      }else if(ensamble == 0){
+                                 JOptionPane.showMessageDialog(null,"DESPEDIDO, INEFICIENTE, como puedes tener un departamiento sin nadie!!");
+                                 return false;
                       }else{
                                  return true;
                       }
@@ -86,6 +98,7 @@ public class casaRodaje extends javax.swing.JFrame {
                       jLabel29 = new javax.swing.JLabel();
                       jMenu1 = new javax.swing.JMenu();
                       jTabbedPane1 = new javax.swing.JTabbedPane();
+                      jLabel7 = new javax.swing.JLabel();
                       jPanel1 = new javax.swing.JPanel();
                       jPanel2 = new javax.swing.JPanel();
                       jLabel1 = new javax.swing.JLabel();
@@ -98,17 +111,13 @@ public class casaRodaje extends javax.swing.JFrame {
                       Spinner_Intro = new javax.swing.JSpinner();
                       Spinner_Inicio = new javax.swing.JSpinner();
                       Spinner_cierre = new javax.swing.JSpinner();
-                      jLabel7 = new javax.swing.JLabel();
-                      jScrollPane6 = new javax.swing.JScrollPane();
-                      jTextPane6 = new javax.swing.JTextPane();
+                      outputMAX = new javax.swing.JLabel();
                       jLabel8 = new javax.swing.JLabel();
-                      jSpinner6 = new javax.swing.JSpinner();
+                      Spinner_ensamble = new javax.swing.JSpinner();
                       jLabel9 = new javax.swing.JLabel();
                       jScrollPane8 = new javax.swing.JScrollPane();
                       jTextPane8 = new javax.swing.JTextPane();
                       jLabel10 = new javax.swing.JLabel();
-                      jScrollPane9 = new javax.swing.JScrollPane();
-                      jTextPane9 = new javax.swing.JTextPane();
                       jLabel11 = new javax.swing.JLabel();
                       jScrollPane10 = new javax.swing.JScrollPane();
                       jTextPane10 = new javax.swing.JTextPane();
@@ -124,15 +133,13 @@ public class casaRodaje extends javax.swing.JFrame {
                       jScrollPane14 = new javax.swing.JScrollPane();
                       jTextPane14 = new javax.swing.JTextPane();
                       jLabel16 = new javax.swing.JLabel();
-                      jScrollPane15 = new javax.swing.JScrollPane();
-                      jTextPane15 = new javax.swing.JTextPane();
                       jLabel17 = new javax.swing.JLabel();
                       jScrollPane16 = new javax.swing.JScrollPane();
                       jTextPane16 = new javax.swing.JTextPane();
                       jLabel18 = new javax.swing.JLabel();
                       jScrollPane17 = new javax.swing.JScrollPane();
                       jTextPane17 = new javax.swing.JTextPane();
-                      outputPlotTwist = new javax.swing.JLabel();
+                      outputCapitulos = new javax.swing.JLabel();
                       outputGastos = new javax.swing.JLabel();
                       outputCreditos = new javax.swing.JLabel();
                       outputInicio = new javax.swing.JLabel();
@@ -149,6 +156,10 @@ public class casaRodaje extends javax.swing.JFrame {
                       jLabel26 = new javax.swing.JLabel();
                       jLabel27 = new javax.swing.JLabel();
                       outputIntro = new javax.swing.JLabel();
+                      outputPlotTwist = new javax.swing.JLabel();
+                      jLabel30 = new javax.swing.JLabel();
+                      outputPM = new javax.swing.JLabel();
+                      outputPM1 = new javax.swing.JLabel();
 
                       jMenuItem1.setText("jMenuItem1");
 
@@ -157,6 +168,8 @@ public class casaRodaje extends javax.swing.JFrame {
                       jLabel29.setText("jLabel29");
 
                       jMenu1.setText("jMenu1");
+
+                      jLabel7.setText("jLabel7");
 
                       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
                       getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -220,16 +233,19 @@ public class casaRodaje extends javax.swing.JFrame {
                       });
                       getContentPane().add(Spinner_cierre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 50, -1));
 
-                      jLabel7.setText("Empleados disponibles");
-                      getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
-
-                      jScrollPane6.setViewportView(jTextPane6);
-
-                      getContentPane().add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 50, -1));
+                      outputMAX.setText("0");
+                      getContentPane().add(outputMAX, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 40, -1));
 
                       jLabel8.setText("ensambladores");
                       getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, -1, -1));
-                      getContentPane().add(jSpinner6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 50, -1));
+
+                      Spinner_ensamble.setModel(new javax.swing.SpinnerNumberModel(0, 0, 13, 1));
+                      Spinner_ensamble.addChangeListener(new javax.swing.event.ChangeListener() {
+                                 public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                                            Spinner_ensambleStateChanged(evt);
+                                 }
+                      });
+                      getContentPane().add(Spinner_ensamble, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 50, -1));
 
                       jLabel9.setText("Dias hasta la entrega");
                       getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, -1, -1));
@@ -238,12 +254,8 @@ public class casaRodaje extends javax.swing.JFrame {
 
                       getContentPane().add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 270, 60, -1));
 
-                      jLabel10.setText("Project Manager");
+                      jLabel10.setText("Project Manager:");
                       getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, -1, -1));
-
-                      jScrollPane9.setViewportView(jTextPane9);
-
-                      getContentPane().add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 240, -1));
 
                       jLabel11.setText("Director");
                       getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, -1, -1));
@@ -284,12 +296,8 @@ public class casaRodaje extends javax.swing.JFrame {
 
                       getContentPane().add(jScrollPane14, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 90, -1));
 
-                      jLabel16.setText("capitulos");
+                      jLabel16.setText("capitulos producidos:");
                       getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 320, -1, -1));
-
-                      jScrollPane15.setViewportView(jTextPane15);
-
-                      getContentPane().add(jScrollPane15, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 340, 90, -1));
 
                       jLabel17.setText("ganancias (millones)");
                       getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 250, 120, -1));
@@ -305,10 +313,10 @@ public class casaRodaje extends javax.swing.JFrame {
 
                       getContentPane().add(jScrollPane17, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 270, 60, -1));
 
-                      outputPlotTwist.setBackground(new java.awt.Color(204, 255, 255));
-                      outputPlotTwist.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-                      outputPlotTwist.setText("0");
-                      getContentPane().add(outputPlotTwist, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 90, 20));
+                      outputCapitulos.setBackground(new java.awt.Color(204, 255, 255));
+                      outputCapitulos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                      outputCapitulos.setText("0");
+                      getContentPane().add(outputCapitulos, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 340, 90, 20));
 
                       outputGastos.setBackground(new java.awt.Color(204, 255, 255));
                       outputGastos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -385,7 +393,21 @@ public class casaRodaje extends javax.swing.JFrame {
                       outputIntro.setBackground(new java.awt.Color(204, 255, 255));
                       outputIntro.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
                       outputIntro.setText("0");
-                      getContentPane().add(outputIntro, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 90, 20));
+                      getContentPane().add(outputIntro, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 90, 20));
+
+                      outputPlotTwist.setBackground(new java.awt.Color(204, 255, 255));
+                      outputPlotTwist.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                      outputPlotTwist.setText("0");
+                      getContentPane().add(outputPlotTwist, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 90, 20));
+
+                      jLabel30.setText("Empleados disponibles: ");
+                      getContentPane().add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+                      outputPM.setText("...");
+                      getContentPane().add(outputPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 250, -1));
+
+                      outputPM1.setText("...");
+                      getContentPane().add(outputPM1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 250, -1));
 
                       pack();
            }// </editor-fold>//GEN-END:initComponents
@@ -407,11 +429,15 @@ public class casaRodaje extends javax.swing.JFrame {
                       }else if(minimo == false){
                                  
                       }else if (continuar == true){
+                                 
                                  ProductorIntro pIntro = new ProductorIntro(drive_Intro); 
                                  ProductorCreditos pCreditos = new ProductorCreditos(drive_Creditos); 
                                  ProductorInicio pInicio = new ProductorInicio(drive_Inicio);
                                  ProductorCierre pCierre = new ProductorCierre(drive_Cierre); 
                                  ProductorPlotTwist pPlot = new ProductorPlotTwist(drive_Plot); 
+                                 ProjectManager PM = new ProjectManager(drive_Restantes);
+                                 Ensambladores Ensamble =  new Ensambladores();
+                                 
                                  
                                  iniciar = true;
                                  this.Boton_Simulacion.setEnabled(false);
@@ -419,7 +445,8 @@ public class casaRodaje extends javax.swing.JFrame {
                                  pCreditos.setProductor_Creditos((int) Spinner_Creditos.getValue());
                                  pInicio.setProductor_Inicio((int) Spinner_Inicio.getValue());
                                  pCierre.setProductor_cierre((int) Spinner_cierre.getValue());
-                                 pPlot.setProductor_plottwist((int) Spinner_cierre.getValue());
+                                 pPlot.setProductor_plottwist((int) Spinner_plottwist.getValue());
+                                 Ensamble.setEnsambladores((int) Spinner_ensamble.getValue());
                                  
                                  
                                  pIntro.introCreada();
@@ -433,12 +460,17 @@ public class casaRodaje extends javax.swing.JFrame {
                                  pInicio.start();
                                  pCierre.start();
                                  pPlot.start();
+                                 Ensamble.start();
+                                 PM.start();
                                  
                                  double gastosIntro = pIntro.pagoSueldos();
                                  double gastosCierre = pCierre.pagoSueldos();
                                  double gastosCreditos = pCreditos.pagoSueldos();
                                  double gastosInicio = pInicio.pagoSueldos();
                                  double gastosPlot = pPlot.pagoSueldos();
+                                 double gastosEnsambladores = pPlot.pagoSueldos();
+                                 
+                                 
                                          
                                  Thread hilo = new Thread(){
                                  public void run(){                               
@@ -449,13 +481,48 @@ public class casaRodaje extends javax.swing.JFrame {
                                                                              outputCreditos.setText(Integer.toString(pCreditos.drive_Creditos.availablePermits()));
                                                                              outputInicio.setText(Integer.toString(pInicio.drive_Inicio.availablePermits()));
                                                                              outputCierre.setText(Integer.toString(pCierre.drive_Cierre.availablePermits()));
-                                                                             outputPlotTwist.setText(Integer.toString(pCierre.drive_Cierre.availablePermits()));
+                                                                             outputPlotTwist.setText(Integer.toString(pPlot.drive_PlotTwist.availablePermits()));
                                                                              
-                                                                             outputGastos.setText(Double.toString(GastosTotales += gastosIntro + gastosCierre + gastosCreditos + gastosInicio + gastosPlot ));
+                                                                             outputGastos.setText(Double.toString(GastosTotales += gastosIntro + gastosCierre + gastosCreditos + gastosInicio + gastosPlot + gastosEnsambladores ));
+                                                                             outputCapitulos.setText(Integer.toString(Ensamble.getCapitulos()));
+                                                                             
+                                                                             parteIntro = Inicio_Sistema.tamanoIntro - pIntro.drive_Intro.availablePermits();
+                                                                             parteInicio = Inicio_Sistema.tamanoInicio - pInicio.drive_Inicio.availablePermits();
+                                                                             parteCierre= Inicio_Sistema.tamanoCierre - pCierre.drive_Cierre.availablePermits();
+                                                                             parteCreditos = Inicio_Sistema.tamanoCreditos - pCreditos.drive_Creditos.availablePermits();
+                                                                             partePlot = Inicio_Sistema.tamanoPlot - pPlot.drive_PlotTwist.availablePermits();
+                                                                             
+                                                                             if(parteIntro > 0 && parteInicio > 0 && parteCierre > 0 && parteCreditos > 0 ){
+                                                                                        capitulo_creado = true;
+                                                                                        if(Ensamble.getCapitulos()%5==0 && partePlot >0){
+                                                                                                   capitulo_creadoPlot = true;
+                                                                                        }       
+                                                                             }
+                                                                             
+                                                                             for(int i=0; i < Ensamble.getCapCreados();i++){
+                                                                                        pIntro.reducir();
+                                                                                        pInicio.reducir();
+                                                                                        pCierre.reducir();
+                                                                                        pCreditos.reducir();
+                                                                                        if(Ensamble.getCapitulos()%5==0 ){
+                                                                                                   pPlot.reducir();
+                                                                                        }
+                                                                                        
+                                                                             }
+                                                                            
                                                                              
                                                                              
+//                                                                             if(Rick_Morty == true){
+//                                                                                        outputPM1.setText("Viendo Rick y Morty");
+//                                                                             }
+//                                                                             else if(reviews == true){
+//                                                                                        outputPM.setText("Revisando reviews");
+//                                                                             }
                                                                              
+                                                                             
+                                                                             //System.out.println("disponibilidad: "+ pCierre.drive_Cierre.availablePermits());
                                                                              Thread.sleep(1000);
+                                                                             contador = true;
                                                                   }catch(InterruptedException e){
                                                                             
                                                                   }
@@ -491,6 +558,11 @@ public class casaRodaje extends javax.swing.JFrame {
                       // TODO add your handling code here:
                       plot = (int) Spinner_plottwist.getValue();
            }//GEN-LAST:event_Spinner_plottwistStateChanged
+
+           private void Spinner_ensambleStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_Spinner_ensambleStateChanged
+                      // TODO add your handling code here:
+                      ensamble = (int) Spinner_ensamble.getValue();
+           }//GEN-LAST:event_Spinner_ensambleStateChanged
 
            /**
             * @param args the command line arguments
@@ -534,6 +606,7 @@ public class casaRodaje extends javax.swing.JFrame {
            private javax.swing.JSpinner Spinner_Inicio;
            private javax.swing.JSpinner Spinner_Intro;
            private javax.swing.JSpinner Spinner_cierre;
+           private javax.swing.JSpinner Spinner_ensamble;
            private javax.swing.JSpinner Spinner_plottwist;
            private javax.swing.JLabel jLabel1;
            private javax.swing.JLabel jLabel10;
@@ -558,6 +631,7 @@ public class casaRodaje extends javax.swing.JFrame {
            private javax.swing.JLabel jLabel28;
            private javax.swing.JLabel jLabel29;
            private javax.swing.JLabel jLabel3;
+           private javax.swing.JLabel jLabel30;
            private javax.swing.JLabel jLabel4;
            private javax.swing.JLabel jLabel5;
            private javax.swing.JLabel jLabel6;
@@ -572,29 +646,26 @@ public class casaRodaje extends javax.swing.JFrame {
            private javax.swing.JScrollPane jScrollPane11;
            private javax.swing.JScrollPane jScrollPane13;
            private javax.swing.JScrollPane jScrollPane14;
-           private javax.swing.JScrollPane jScrollPane15;
            private javax.swing.JScrollPane jScrollPane16;
            private javax.swing.JScrollPane jScrollPane17;
-           private javax.swing.JScrollPane jScrollPane6;
            private javax.swing.JScrollPane jScrollPane8;
-           private javax.swing.JScrollPane jScrollPane9;
-           private javax.swing.JSpinner jSpinner6;
            private javax.swing.JTabbedPane jTabbedPane1;
            private javax.swing.JTextPane jTextPane10;
            private javax.swing.JTextPane jTextPane11;
            private javax.swing.JTextPane jTextPane13;
            private javax.swing.JTextPane jTextPane14;
-           private javax.swing.JTextPane jTextPane15;
            private javax.swing.JTextPane jTextPane16;
            private javax.swing.JTextPane jTextPane17;
-           private javax.swing.JTextPane jTextPane6;
            private javax.swing.JTextPane jTextPane8;
-           private javax.swing.JTextPane jTextPane9;
+           private javax.swing.JLabel outputCapitulos;
            private javax.swing.JLabel outputCierre;
            private javax.swing.JLabel outputCreditos;
            private javax.swing.JLabel outputGastos;
            private javax.swing.JLabel outputInicio;
            private javax.swing.JLabel outputIntro;
+           private javax.swing.JLabel outputMAX;
+           private javax.swing.JLabel outputPM;
+           private javax.swing.JLabel outputPM1;
            private javax.swing.JLabel outputPlotTwist;
            // End of variables declaration//GEN-END:variables
 }

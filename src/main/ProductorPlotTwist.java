@@ -53,6 +53,10 @@ public class ProductorPlotTwist  extends Thread{
                       sueldo = 24*10*Productor_plottwist;
                       return sueldo;
            }
+           
+           public void reducir(){
+                      drive_PlotTwist.release();
+           }
 
            
            
@@ -65,6 +69,7 @@ public class ProductorPlotTwist  extends Thread{
                                             for(i = 0 ; i < plottwist; i++){
                                                        drive_PlotTwist.acquire();
                                             }
+                                            System.out.println(drive_PlotTwist.availablePermits());
                                             
                                  }
                       }catch(InterruptedException e){

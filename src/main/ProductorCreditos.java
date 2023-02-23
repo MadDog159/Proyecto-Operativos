@@ -54,7 +54,10 @@ public class ProductorCreditos  extends Thread{
                       sueldo = 24*3*Productor_Creditos;
                       return sueldo;
            }
-
+           
+           public void reducir(){
+                      drive_Creditos.release();
+           }
            
            
            @Override
@@ -66,6 +69,8 @@ public class ProductorCreditos  extends Thread{
                                             for(i = 0 ; i < creditos; i++){
                                                        drive_Creditos.acquire();
                                             }
+                                            
+                                            
                                             
                                  }
                       }catch(InterruptedException e){

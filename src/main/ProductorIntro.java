@@ -5,6 +5,7 @@
 package main;
 
 import java.util.concurrent.Semaphore;
+import static main.Ensambladores.capitulo_creado;
 
 
 /**
@@ -15,7 +16,8 @@ public class ProductorIntro  extends Thread{
            int sueldo;
            int intros = 0;
            int Productor_Intro = 0;
-           public Semaphore drive_Intro;
+           public  Semaphore drive_Intro;
+           
 
            public ProductorIntro(Semaphore drive_Intro) {
                       this.drive_Intro = drive_Intro;
@@ -55,6 +57,9 @@ public class ProductorIntro  extends Thread{
                       return sueldo;
            }
            
+           public  void reducir(){
+                      drive_Intro.release();
+           }
 
            
            
@@ -67,8 +72,10 @@ public class ProductorIntro  extends Thread{
                                             for(i = 0 ; i < intros; i++){
                                                        drive_Intro.acquire();
                                             }
-                                            
-                                            
+                                            //System.out.println(drive_Intro.availablePermits());
+
+
+   
                                  }
                       }catch(InterruptedException e){
                                  

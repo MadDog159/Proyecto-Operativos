@@ -54,6 +54,10 @@ public class ProductorCierre  extends Thread{
                       sueldo = 24*7.5*Productor_cierre;
                       return sueldo;
            }
+           
+           public void reducir(){
+                      drive_Cierre.release();
+           }
 
            
            
@@ -63,11 +67,13 @@ public class ProductorCierre  extends Thread{
                                  while(true){
                                             Thread.sleep(2000);
                                             int i;
+                                            System.out.println(cierre);
                                             for(i = 0 ; i < cierre; i++){
                                                        drive_Cierre.acquire();
+                                                       }
                                             }
-                                            
-                                 }
+                   
+                                 
                       }catch(InterruptedException e){
                                  
                       }
