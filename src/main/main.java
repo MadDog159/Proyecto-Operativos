@@ -4,6 +4,7 @@
  */
 package main;
 
+import interfaz.Inicio_Sistema;
 import interfaz.casaRodaje;
 import java.util.Scanner;
 
@@ -24,8 +25,10 @@ public class main {
                      // hola.start();
                  //     hola.introCreada();
                       
-                      casaRodaje inicial = new casaRodaje();
-                      inicial.setVisible(true);
+                      Inicio_Sistema inicio = new Inicio_Sistema();
+                      inicio.setVisible(true);
+                      
+                      //inicial.setVisible(true);
                       
                        
            }

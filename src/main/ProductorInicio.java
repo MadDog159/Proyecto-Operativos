@@ -11,14 +11,14 @@ import java.util.concurrent.Semaphore;
  *
  * @author epidu
  */
-public class ProductorIntro  extends Thread{
-           int sueldo;
-           int intros = 0;
-           int Productor_Intro = 0;
-           public Semaphore drive_Intro;
+public class ProductorInicio  extends Thread{
+           int sueldo = 7;
+           int inicio = 0;
+           int Productor_Inicio = 0;
+           public Semaphore drive_Inicio;
 
-           public ProductorIntro(Semaphore drive_Intro) {
-                      this.drive_Intro = drive_Intro;
+           public ProductorInicio(Semaphore drive_Inicio) {
+                      this.drive_Inicio = drive_Inicio;
            }
            
 
@@ -26,35 +26,34 @@ public class ProductorIntro  extends Thread{
                       return sueldo;
            }
 
-           public int getIntros() {
-                      return intros;
+           public int getInicio() {
+                      return inicio;
            }
 
            public void setSueldo(int sueldo) {
                       this.sueldo = sueldo;
            }
 
-           public void setIntros(int intros) {
-                      this.intros = intros;
+           public void setInicio(int inicio) {
+                      this.inicio = inicio;
            }
            
-           public int getProductor_Intro() {
-                      return Productor_Intro;
+           public int getProductor_Inicio() {
+                      return Productor_Inicio;
            }
 
-           public void setProductor_Intro(int Productor_Intro) {
-                      this.Productor_Intro = Productor_Intro;
+           public void setProductor_Inicio(int Productor_Inicio) {
+                      this.Productor_Inicio = Productor_Inicio;
            }
            
-           public void introCreada(){
-                      intros += Productor_Intro;
+           public void inicioCreada(){
+                      inicio += Productor_Inicio;
            }
            
            public double pagoSueldos(){
-                      sueldo = 24*5*Productor_Intro;
+                      sueldo = 24*7*Productor_Inicio;
                       return sueldo;
            }
-           
 
            
            
@@ -62,12 +61,11 @@ public class ProductorIntro  extends Thread{
            public void run(){
                       try{
                                  while(true){
-                                            Thread.sleep(500);
+                                            Thread.sleep(3000);
                                             int i;
-                                            for(i = 0 ; i < intros; i++){
-                                                       drive_Intro.acquire();
+                                            for(i = 0 ; i < inicio; i++){
+                                                       drive_Inicio.acquire();
                                             }
-                                            
                                             
                                  }
                       }catch(InterruptedException e){
