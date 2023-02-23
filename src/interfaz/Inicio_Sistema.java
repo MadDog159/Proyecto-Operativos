@@ -4,6 +4,8 @@
  */
 package interfaz;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author epidu
@@ -14,7 +16,8 @@ public class Inicio_Sistema extends javax.swing.JFrame {
            public static int tamanoInicio;
            public static int tamanoCierre;
            public static int tamanoPlot;
-
+           public static int dias_entrega;
+           public static int periodo_temporadas;
            /**
             * Creates new form Inicio_Sistema
             */
@@ -23,6 +26,8 @@ public class Inicio_Sistema extends javax.swing.JFrame {
                       this.setLocationRelativeTo(null);
                       this.setResizable(false);
            }
+                           
+           
 
            /**
             * This method is called from within the constructor to initialize
@@ -33,10 +38,20 @@ public class Inicio_Sistema extends javax.swing.JFrame {
            // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
            private void initComponents() {
 
+                      jScrollPane1 = new javax.swing.JScrollPane();
+                      jTextArea1 = new javax.swing.JTextArea();
                       jPanel1 = new javax.swing.JPanel();
                       jLabel1 = new javax.swing.JLabel();
                       No = new javax.swing.JButton();
                       si = new javax.swing.JButton();
+                      TextField_Dias_de_entrega = new javax.swing.JTextField();
+                      TextField_Periodo_de_temporadas = new javax.swing.JTextField();
+                      jLabel2 = new javax.swing.JLabel();
+                      jLabel3 = new javax.swing.JLabel();
+
+                      jTextArea1.setColumns(20);
+                      jTextArea1.setRows(5);
+                      jScrollPane1.setViewportView(jTextArea1);
 
                       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
                       getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -48,7 +63,7 @@ public class Inicio_Sistema extends javax.swing.JFrame {
                       jLabel1.setForeground(new java.awt.Color(0, 0, 0));
                       jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                       jLabel1.setText("Desea tener espacios de disco duro infiinito");
-                      getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 380, -1));
+                      getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 380, -1));
 
                       No.setText("No");
                       No.addActionListener(new java.awt.event.ActionListener() {
@@ -56,7 +71,7 @@ public class Inicio_Sistema extends javax.swing.JFrame {
                                             NoActionPerformed(evt);
                                  }
                       });
-                      getContentPane().add(No, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 50, 80, -1));
+                      getContentPane().add(No, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 80, -1));
 
                       si.setText("Si");
                       si.addActionListener(new java.awt.event.ActionListener() {
@@ -64,35 +79,90 @@ public class Inicio_Sistema extends javax.swing.JFrame {
                                             siActionPerformed(evt);
                                  }
                       });
-                      getContentPane().add(si, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 80, -1));
+                      getContentPane().add(si, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 80, -1));
+
+                      TextField_Dias_de_entrega.addActionListener(new java.awt.event.ActionListener() {
+                                 public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                            TextField_Dias_de_entregaActionPerformed(evt);
+                                 }
+                      });
+                      getContentPane().add(TextField_Dias_de_entrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 80, -1));
+
+                      TextField_Periodo_de_temporadas.addActionListener(new java.awt.event.ActionListener() {
+                                 public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                            TextField_Periodo_de_temporadasActionPerformed(evt);
+                                 }
+                      });
+                      getContentPane().add(TextField_Periodo_de_temporadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 80, -1));
+
+                      jLabel2.setText("Periodo de entrega de temporadas");
+                      getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, -1, -1));
+
+                      jLabel3.setText("Dias para entregar el proyecto");
+                      getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
                       pack();
            }// </editor-fold>//GEN-END:initComponents
 
            private void siActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siActionPerformed
                       // TODO add your handling code here:
-                      tamanoIntro = 999999999;
-                      tamanoCreditos = 999999999;
-                      tamanoInicio = 999999999;
-                      tamanoCierre = 999999999;
-                      tamanoPlot = 999999999;
-                      casaRodaje inicial = new casaRodaje();
-                      inicial.setVisible(true);
-                      this.dispose();
+                      try{
+                                 if(Integer.parseInt(TextField_Dias_de_entrega.getText()) > 0 && Integer.parseInt(TextField_Periodo_de_temporadas.getText()) > 0){
+                                            tamanoIntro = 999999999;
+                                            tamanoCreditos = 999999999;
+                                            tamanoInicio = 999999999;
+                                            tamanoCierre = 999999999;
+                                            tamanoPlot = 999999999;
+                                            dias_entrega = Integer.parseInt(TextField_Dias_de_entrega.getText()); 
+                                            periodo_temporadas =Integer.parseInt(TextField_Periodo_de_temporadas.getText());
+                                            casaRodaje inicial = new casaRodaje();
+                                            inicial.setVisible(true);
+                                            this.dispose();
+                                 }            
+                      }catch(NumberFormatException e){
+                                 JOptionPane.showMessageDialog(null,"Un campo se encuentra incompleto");
+                      }
+                      
                       
            }//GEN-LAST:event_siActionPerformed
 
            private void NoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NoActionPerformed
-                      // TODO add your handling code here:
-                      tamanoIntro = 30;
-                      tamanoCreditos = 25;
-                      tamanoInicio = 50;
-                      tamanoCierre = 55;
-                      tamanoPlot = 40;
-                      casaRodaje inicial = new casaRodaje();
-                      inicial.setVisible(true);
-                      this.dispose();
+
+                      try{
+                                 if(Integer.parseInt(TextField_Periodo_de_temporadas.getText()) > 0 && Integer.parseInt(TextField_Dias_de_entrega.getText()) > 0){
+                                            tamanoIntro = 30;
+                                            tamanoCreditos = 25;
+                                            tamanoInicio = 50;
+                                            tamanoCierre = 55;
+                                            tamanoPlot = 40;
+                                            dias_entrega = Integer.parseInt(TextField_Dias_de_entrega.getText()); 
+                                            periodo_temporadas =Integer.parseInt(TextField_Periodo_de_temporadas.getText());
+                                            casaRodaje inicial = new casaRodaje();
+                                            inicial.setVisible(true);
+                                            this.dispose();
+                                 }
+                      }catch(NumberFormatException e){
+                                 JOptionPane.showMessageDialog(null,"Un campo se encuentra incompleto");
+                      }
            }//GEN-LAST:event_NoActionPerformed
+
+           private void TextField_Dias_de_entregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_Dias_de_entregaActionPerformed
+                      // TODO add your handling code here:
+                      try {
+                                 dias_entrega = Integer.parseInt(TextField_Dias_de_entrega.getText()); 
+                      } catch (NumberFormatException ex) {
+                                 JOptionPane.showMessageDialog(null,"Ingrese un valor entero valido");
+                      }
+           }//GEN-LAST:event_TextField_Dias_de_entregaActionPerformed
+
+           private void TextField_Periodo_de_temporadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_Periodo_de_temporadasActionPerformed
+                      // TODO add your handling code here:
+                      try {
+                                 periodo_temporadas =Integer.parseInt(TextField_Periodo_de_temporadas.getText());
+                      } catch (NumberFormatException ex) {
+                                 JOptionPane.showMessageDialog(null,"Ingrese un valor entero valido");
+                      }
+           }//GEN-LAST:event_TextField_Periodo_de_temporadasActionPerformed
 
            /**
             * @param args the command line arguments
@@ -131,8 +201,14 @@ public class Inicio_Sistema extends javax.swing.JFrame {
 
            // Variables declaration - do not modify//GEN-BEGIN:variables
            private javax.swing.JButton No;
+           private javax.swing.JTextField TextField_Dias_de_entrega;
+           private javax.swing.JTextField TextField_Periodo_de_temporadas;
            private javax.swing.JLabel jLabel1;
+           private javax.swing.JLabel jLabel2;
+           private javax.swing.JLabel jLabel3;
            private javax.swing.JPanel jPanel1;
+           private javax.swing.JScrollPane jScrollPane1;
+           private javax.swing.JTextArea jTextArea1;
            private javax.swing.JButton si;
            // End of variables declaration//GEN-END:variables
 }
