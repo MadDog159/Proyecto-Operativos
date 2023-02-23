@@ -4,6 +4,7 @@
  */
 package main;
 
+import interfaz.Inicio_Sistema;
 import interfaz.casaRodaje;
 import java.util.concurrent.Semaphore;
 
@@ -13,7 +14,7 @@ import java.util.concurrent.Semaphore;
  * @author epidu
  */
 public class ProjectManager  extends Thread{
-           int sueldo;
+           double sueldo;
            int dias_restantes;
            boolean trabajando;
            boolean flojeando;
@@ -24,7 +25,7 @@ public class ProjectManager  extends Thread{
                       this.drive_Restante = drive_Restante;
            }
 
-           public int getSueldo() {
+           public double getSueldo() {
                       return sueldo;
            }
 
@@ -46,30 +47,41 @@ public class ProjectManager  extends Thread{
            }
            
 
+           
+
            @Override
            public void run(){
                       try{
-                                 if(casaRodaje.contador == true){
-                                            drive_Restante.acquire();
-                                            Thread.sleep(166,6);
-                                            drive_Restante.release();
-                                            casaRodaje.contador = false;
+                                 while(true){
+                                            if(casaRodaje.contador == true){
+                                                       drive_Restante.acquire();
+                                                       Thread.sleep(166,6);
+                                                       casaRodaje.outputPM.setText("Chequeando progreso del dia");
+                                                       dias_restantes -= 1;
+                                                       drive_Restante.release();
+                                                       casaRodaje.contador = false;
+                                                       trabajando = true;
+                                            }
+
+                                            if (trabajando == true){
+                                                       casaRodaje.Rick_Morty = true;
+                                                       Thread.sleep(12,5);
+                                                       casaRodaje.outputPM.setText("Viendo Rick y Morty");
+                                                       casaRodaje.Rick_Morty = false;
+                                                       trabajando = false;
+                                                       flojeando = true;
+                                            }
+                                            if(flojeando == true){
+                                                       casaRodaje.reviews = true;
+                                                       Thread.sleep(12,5);
+                                                       casaRodaje.outputPM.setText("Viendo Reviews");
+                                                       casaRodaje.reviews = false;
+                                                       trabajando = true;
+                                                       flojeando = false;
+                                            }
                                  }
 
-                                 if (trabajando == true){
-                                            casaRodaje.Rick_Morty = true;
-                                            Thread.sleep(12,5);
-                                            casaRodaje.Rick_Morty = false;
-                                            trabajando = false;
-                                            flojeando = true;
-                                 }
-                                 if(flojeando == true){
-                                            casaRodaje.reviews = true;
-                                            Thread.sleep(12,5);
-                                            casaRodaje.reviews = false;
-                                            trabajando = true;
-                                            flojeando = false;
-                                 }
+                                 
    
                                  
                       }catch(InterruptedException e){

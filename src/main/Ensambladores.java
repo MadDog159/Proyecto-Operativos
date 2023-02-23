@@ -18,6 +18,7 @@ public class Ensambladores extends Thread {
            int capCreados;
            public static boolean capitulo_creado = false;
            public static boolean capitulo_creadoPlot = false;
+           public static boolean reducir_Plot = false;
            
 
            public int getEnsambladores() {
@@ -68,7 +69,8 @@ public class Ensambladores extends Thread {
                                             Thread.sleep(2000);
                                             capCreados =0;
                                                        if(capitulo_creado == true){
-                                                                  for(int i = 1; i< ensambladores;i++){
+                                                                  
+                                                                  for(int i = 0; i< ensambladores;i++){
                                                                              if(casaRodaje.parteIntro > 0){
                                                                                         casaRodaje.parteIntro --;
                                                                                         if(casaRodaje.parteInicio > 0){
@@ -83,24 +85,21 @@ public class Ensambladores extends Thread {
                                                                                                                                     capitulos += 1;
                                                                                                                                     capCreados ++;
                                                                                                                                     capitulo_creadoPlot = false;
+                                                                                                                                    reducir_Plot = true;
                                                                                                                          }else{
+                                                                                                                                    
                                                                                                                                     capitulos += 1;
                                                                                                                                     capCreados ++;
-                                                                                                                                    capitulo_creado = false;
                                                                                                                          }
                                                                                                               }else{
-                                                                                                                         break;
                                                                                                               }
                                                                                                    }else{
-                                                                                                              break;
                                                                                                    }
                                                                                         }else{
-                                                                                                   break;
                                                                                         }
                                                                              }else{
-                                                                                        break;
                                                                              }
-                                                                  }
+                                                                  }capitulo_creado = false;
                                                        }
                                                        
                                             

@@ -69,7 +69,7 @@ public class ProductorPlotTwist  extends Thread{
                                             for(i = 0 ; i < plottwist; i++){
                                                        drive_PlotTwist.acquire();
                                             }
-                                            System.out.println(drive_PlotTwist.availablePermits());
+                                            //System.out.println(drive_PlotTwist.availablePermits());
                                             
                                  }
                       }catch(InterruptedException e){
