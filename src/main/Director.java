@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import interfaz.Inicio_Sistema;
 import static interfaz.Inicio_Sistema.Horas;
+import static interfaz.casaRodaje.Audiencia;
 
 
 /**
@@ -22,11 +23,11 @@ import static interfaz.Inicio_Sistema.Horas;
 public class Director  extends Thread{
            double sueldo = 100;
            boolean vigilando = true;
-           int min_val = Horas/24/2, max_val = Horas/24/60*90;
+           int min_val = Horas*30/1440, max_val = Horas*90/1440;
            int min_per = Horas/2, max_per = Horas/24*18;
            int reloj_intervalo;
            int reloj_periodo;
-           int dias_restantes;
+           int Ganancia;
            public Semaphore drive_Restante;
            
 
@@ -44,10 +45,14 @@ public class Director  extends Thread{
            
            public void GananciasNetas(){
                        for(int i = 0; i < casaRodaje.modelo.getSize(); i++){
-                                 casaRodaje.CapitulosTotales  += Integer.parseInt(modelo.getElementAt(i));
+                                  System.out.println(modelo.get(i)+" su puta madre");
+                                 casaRodaje.CapitulosTotales  += Integer.parseInt(modelo.get(i));
                                  }
-                       casaRodaje.Ganancia = (int) ((casaRodaje.CapitulosTotales + casaRodaje.CapitulosSobrantes) * 653333);
-                       casaRodaje.GananciaNeta = casaRodaje.Ganancia - casaRodaje.faltas;
+                       System.out.println(casaRodaje.CapitulosTotales+"tu mama");
+                       System.out.println(casaRodaje.CapitulosSobrantes+"la tuya");
+                       System.out.println(Audiencia+"malditojava");
+                       Ganancia = (int) ((casaRodaje.CapitulosTotales + casaRodaje.CapitulosSobrantes) * (100000*Audiencia)/150000);
+                       casaRodaje.GananciaNeta = Ganancia - casaRodaje.faltas;
                                                                                         
            }
            

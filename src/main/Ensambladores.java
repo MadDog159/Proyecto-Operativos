@@ -23,6 +23,29 @@ public class Ensambladores extends Thread {
            public static boolean capitulo_creado = false;
            public static boolean capitulo_creadoPlot = false;
            public static boolean reducir_Plot = false;
+           int intro, inicio,cierre, creditos,plot;
+
+           public void setIntro(int intro) {
+                      this.intro = intro;
+           }
+
+           public void setInicio(int inicio) {
+                      this.inicio = inicio;
+           }
+
+           public void setCierre(int cierre) {
+                      this.cierre = cierre;
+           }
+
+           public void setCreditos(int creditos) {
+                      this.creditos = creditos;
+           }
+
+           public void setPlot(int plot) {
+                      this.plot = plot;
+           }
+           
+           
            
 
            public int getEnsambladores() {
@@ -96,17 +119,18 @@ public class Ensambladores extends Thread {
                                                        if(capitulo_creado == true){
                                                                   
                                                                   for(int i = 0; i< ensambladores;i++){
-                                                                             if(casaRodaje.parteIntro > 0){
-                                                                                        casaRodaje.parteIntro --;
-                                                                                        if(casaRodaje.parteInicio > 0){
-                                                                                                   casaRodaje.parteInicio --;
-                                                                                                   if(casaRodaje.parteCierre > 1){
-                                                                                                              casaRodaje.parteCierre -=2;
-                                                                                                              if(casaRodaje.parteCreditos > 0){
-                                                                                                                         casaRodaje.parteCreditos--;
+                                                                             
+                                                                             if(casaRodaje.parteIntro > intro-1){
+                                                                                        casaRodaje.parteIntro -=intro;
+                                                                                        if(casaRodaje.parteInicio > inicio-1){
+                                                                                                   casaRodaje.parteInicio -=inicio;
+                                                                                                   if(casaRodaje.parteCierre > cierre-1){
+                                                                                                              casaRodaje.parteCierre -=cierre;
+                                                                                                              if(casaRodaje.parteCreditos > creditos-1){
+                                                                                                                         casaRodaje.parteCreditos-=creditos;
                                                                                                                          
-                                                                                                                         if(casaRodaje.partePlot > 1 && capitulo_creadoPlot == true){
-                                                                                                                                    casaRodaje.partePlot -=2;
+                                                                                                                         if(casaRodaje.partePlot > plot-1 && capitulo_creadoPlot == true){
+                                                                                                                                    casaRodaje.partePlot -=plot;
                                                                                                                                     capitulos += 1;
                                                                                                                                     capCreados ++;
                                                                                                                                     capitulo_creadoPlot = false;

@@ -88,7 +88,7 @@ public class ProjectManager  extends Thread{
 
                                             if (trabajando == true){
                                                        casaRodaje.Rick_Morty = true;
-                                                       Thread.sleep(Inicio_Sistema.Horas/24/60*(15+Inicio_Sistema.cedula_PM_intervalos));
+                                                       Thread.sleep(Inicio_Sistema.Horas*(15+Inicio_Sistema.cedula_PM_intervalos)/1440);
                                                        casaRodaje.outputPM.setText("Viendo Rick y Morty");
                                                        if(casaRodaje.verificar == true){
                                                                   casaRodaje.faltas +=1;
@@ -99,7 +99,7 @@ public class ProjectManager  extends Thread{
                                             }
                                             if(flojeando == true){
                                                        casaRodaje.reviews = true;
-                                                       Thread.sleep(Inicio_Sistema.Horas/24/60*(15+Inicio_Sistema.cedula_PM_intervalos));
+                                                       Thread.sleep(Inicio_Sistema.Horas*(15+Inicio_Sistema.cedula_PM_intervalos)/1440);
                                                        casaRodaje.outputPM.setText("Viendo Reviews");
                                                        casaRodaje.reviews = false;
                                                        trabajando = true;

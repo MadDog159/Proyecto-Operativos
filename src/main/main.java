@@ -29,6 +29,7 @@ public class main {
                       Inicio_Sistema inicio = new Inicio_Sistema();
                       inicio.setVisible(true);
                       
+                      
                       //inicial.setVisible(true);
                       
                        
