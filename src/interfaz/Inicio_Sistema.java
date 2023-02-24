@@ -169,7 +169,7 @@ public class Inicio_Sistema extends javax.swing.JFrame {
                                             cedula(Cedula);
                                             inicio_productores=0;
                                             cierre_productores=0;
-                                            intro_productores=9;
+                                            intro_productores=0;
                                             creditos_productores=0;
                                             plot_productores=0;
                                             ensambladores=0;
@@ -200,7 +200,7 @@ public class Inicio_Sistema extends javax.swing.JFrame {
                                             cedula(Cedula);
                                             inicio_productores=0;
                                             cierre_productores=0;
-                                            intro_productores=9;
+                                            intro_productores=0;
                                             creditos_productores=0;
                                             plot_productores=0;
                                             ensambladores=0;
