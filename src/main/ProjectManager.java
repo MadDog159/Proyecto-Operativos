@@ -16,7 +16,7 @@ import java.util.concurrent.Semaphore;
  */
 public class ProjectManager  extends Thread{
            double sueldo;
-           int dias_restantes;
+           public static int dias_restantes;
            boolean trabajando;
            boolean flojeando;
            public Semaphore drive_Restante;

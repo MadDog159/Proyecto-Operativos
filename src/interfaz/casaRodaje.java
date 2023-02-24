@@ -31,7 +31,7 @@ public class casaRodaje extends javax.swing.JFrame {
            double saldo;
            int inicio,creditos,cierre,intro,plot,ensamble;       
            public static int parteInicio,parteCreditos,parteCierre,parteIntro,partePlot;
-           public static int CapitulosTotales, Ganancia, GananciaNeta, CapitulosSobrantes;
+           public static int CapitulosTotales, Ganancia, GananciaNeta, CapitulosSobrantes, DiasFaltantes;
           
            
            
@@ -263,22 +263,22 @@ public class casaRodaje extends javax.swing.JFrame {
                       getContentPane().add(Spinner_ensamble, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 50, -1));
 
                       jLabel9.setText("Dias hasta la entrega");
-                      getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, -1, -1));
+                      getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 60, -1, -1));
 
                       jLabel10.setText("Project Manager:");
-                      getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, -1, -1));
+                      getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, -1, -1));
 
                       jLabel11.setText("Director");
-                      getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, -1, -1));
+                      getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 180, -1, -1));
 
                       jLabel12.setText("Faltas:");
-                      getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 110, -1, -1));
+                      getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, -1, -1));
 
                       jLabel13.setText("Gastos de la planta:");
-                      getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, 120, -1));
+                      getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 140, 120, -1));
 
                       jLabel14.setText("Salario:");
-                      getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 50, -1));
+                      getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 50, -1));
 
                       Boton_Parar.setText("Parar");
                       Boton_Parar.addActionListener(new java.awt.event.ActionListener() {
@@ -292,38 +292,38 @@ public class casaRodaje extends javax.swing.JFrame {
                       getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, -1, -1));
 
                       jLabel16.setText("capitulos producidos:");
-                      getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 250, -1, -1));
+                      getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, -1, -1));
 
                       jLabel17.setText("Recaudado en ventas:");
-                      getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 190, 130, -1));
+                      getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 130, -1));
 
                       jLabel18.setText("Dias por lotes");
-                      getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, -1, -1));
+                      getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, -1, -1));
 
                       outputCapitulos.setBackground(new java.awt.Color(204, 255, 255));
                       outputCapitulos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
                       outputCapitulos.setText("0");
-                      getContentPane().add(outputCapitulos, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 270, 90, 20));
+                      getContentPane().add(outputCapitulos, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 270, 90, 20));
 
                       outputGastos.setBackground(new java.awt.Color(204, 255, 255));
                       outputGastos.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
                       outputGastos.setText("0");
-                      getContentPane().add(outputGastos, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 140, 60, 20));
+                      getContentPane().add(outputGastos, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 140, 60, 20));
 
                       outputCreditos.setBackground(new java.awt.Color(204, 255, 255));
                       outputCreditos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
                       outputCreditos.setText("0");
-                      getContentPane().add(outputCreditos, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 90, 20));
+                      getContentPane().add(outputCreditos, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 80, 20));
 
                       outputInicio.setBackground(new java.awt.Color(204, 255, 255));
                       outputInicio.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
                       outputInicio.setText("0");
-                      getContentPane().add(outputInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 90, 20));
+                      getContentPane().add(outputInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 80, 20));
 
                       outputCierre.setBackground(new java.awt.Color(204, 255, 255));
                       outputCierre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
                       outputCierre.setText("0");
-                      getContentPane().add(outputCierre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 90, 20));
+                      getContentPane().add(outputCierre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 80, 20));
 
                       Boton_Simulacion.setText("Simulacion");
                       Boton_Simulacion.addActionListener(new java.awt.event.ActionListener() {
@@ -331,7 +331,7 @@ public class casaRodaje extends javax.swing.JFrame {
                                             Boton_SimulacionActionPerformed(evt);
                                  }
                       });
-                      getContentPane().add(Boton_Simulacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 440, 120, -1));
+                      getContentPane().add(Boton_Simulacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 440, 120, -1));
 
                       Spinner_Creditos.setModel(new javax.swing.SpinnerNumberModel(0, 0, 13, 1));
                       Spinner_Creditos.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -380,39 +380,39 @@ public class casaRodaje extends javax.swing.JFrame {
                       outputIntro.setBackground(new java.awt.Color(204, 255, 255));
                       outputIntro.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
                       outputIntro.setText("0");
-                      getContentPane().add(outputIntro, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 90, 20));
+                      getContentPane().add(outputIntro, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 80, 20));
 
                       outputPlotTwist.setBackground(new java.awt.Color(204, 255, 255));
                       outputPlotTwist.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
                       outputPlotTwist.setText("0");
-                      getContentPane().add(outputPlotTwist, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 90, 20));
+                      getContentPane().add(outputPlotTwist, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 80, 20));
 
                       jLabel30.setText("Empleados disponibles: ");
                       getContentPane().add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
                       outputPM.setText("...");
-                      getContentPane().add(outputPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 250, -1));
+                      getContentPane().add(outputPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 270, -1));
 
                       outputDias_Restantes.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
                       outputDias_Restantes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                       outputDias_Restantes.setText("000");
-                      getContentPane().add(outputDias_Restantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 80, 60, 30));
+                      getContentPane().add(outputDias_Restantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 80, 60, 30));
 
                       outputLotes.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
                       outputLotes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                       outputLotes.setText("000");
-                      getContentPane().add(outputLotes, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 270, 30, -1));
+                      getContentPane().add(outputLotes, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 270, 30, -1));
 
                       outputFaltas.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
                       outputFaltas.setText("00");
-                      getContentPane().add(outputFaltas, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, 40, -1));
+                      getContentPane().add(outputFaltas, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 40, -1));
 
                       outputSalarioPM.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
                       outputSalarioPM.setText("00");
-                      getContentPane().add(outputSalarioPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 50, -1));
+                      getContentPane().add(outputSalarioPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 50, -1));
 
                       outputDirector.setText("...");
-                      getContentPane().add(outputDirector, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, 200, -1));
+                      getContentPane().add(outputDirector, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, 270, -1));
 
                       jScrollPane3.setViewportView(Lista);
 
@@ -429,7 +429,7 @@ public class casaRodaje extends javax.swing.JFrame {
 
                       outputGanancias.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
                       outputGanancias.setText("0");
-                      getContentPane().add(outputGanancias, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 190, 60, -1));
+                      getContentPane().add(outputGanancias, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 190, 60, -1));
 
                       pack();
            }// </editor-fold>//GEN-END:initComponents
@@ -437,10 +437,12 @@ public class casaRodaje extends javax.swing.JFrame {
            private void Boton_PararActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_PararActionPerformed
                       //iniciar = true;
                       //ProductorIntro pIntro = new ProductorIntro();
+                     this.Boton_Parar.setEnabled(false);
                      Director.GananciasNetas();
                      outputGanancias.setText(Integer.toString(GananciaNeta));
                      outputSalarioPM.setText(Double.toString(saldo -=  faltas));
                      iniciar = false;
+                     this.Boton_Simulacion.setEnabled(true);
                      
                      
 
@@ -565,6 +567,7 @@ public class casaRodaje extends javax.swing.JFrame {
                                                                                         
                                                                                         
                                                                                         //System.out.println("disponibilidad: "+ pCierre.drive_Cierre.availablePermits());
+                                                                                        DiasFaltantes = PM.getDias_restantes();
                                                                                         contador = true;
                                                                                         Thread.sleep(1000);
                                                                                         
@@ -646,7 +649,7 @@ hilo.start();
            }
 
            // Variables declaration - do not modify//GEN-BEGIN:variables
-           private javax.swing.JButton Boton_Parar;
+           public static javax.swing.JButton Boton_Parar;
            private javax.swing.JButton Boton_Simulacion;
            private javax.swing.JList<String> Lista;
            private javax.swing.JSpinner Spinner_Creditos;

@@ -22,6 +22,7 @@ public class Director  extends Thread{
            int min_per = 500, max_per = 750;
            int reloj_intervalo;
            int reloj_periodo;
+           int dias_restantes;
            public Semaphore drive_Restante;
            
 
@@ -71,6 +72,11 @@ public class Director  extends Thread{
                                                        drive_Restante.acquire();
                                                        casaRodaje.outputDirector.setText("Revisando Trabajo del Project Manager");
                                                        Thread.sleep(100);
+                                                       System.out.println("termina nojoda");
+                                                       dias_restantes = casaRodaje.DiasFaltantes;
+                                                       if (dias_restantes < 1){
+                                                                  casaRodaje.Boton_Parar.doClick();
+                                                       }
                                                        drive_Restante.release();                   
                                             }
 
