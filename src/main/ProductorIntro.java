@@ -6,6 +6,8 @@ package main;
 
 import static interfaz.casaRodaje.iniciar;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static main.Ensambladores.capitulo_creado;
 
 
@@ -62,30 +64,47 @@ public class ProductorIntro  extends Thread{
                       drive_Intro.release();
            }
            
+           public synchronized void suspender(){
+                      iniciar = true;
+           }
+           public synchronized void reanudar(){
+                      iniciar = false;
+                      notifyAll();
+           }
+           public synchronized void enSuspension(){
+                      while(iniciar){
+                                 try {
+//                                            System.out.println("esta entrando y no deberia");
+                                            wait();
+                                 } catch (InterruptedException ex) {
+                                            Logger.getLogger(ProductorIntro.class.getName()).log(Level.SEVERE, null, ex);
+                                 }
+                      }
+           }
+           
            /**
             *
             */
            @Override
            public void run(){
-                      try{
-                                 while(iniciar){
-                                            Thread.sleep(500);
+                      
+                      while(!isInterrupted()){ 
+                                 
+                                 enSuspension();
+//                                 System.out.println(iniciar);
+
+                                 try{
+                                            Thread.sleep(500);      
                                             int i;
                                             for(i = 0 ; i < intros; i++){
                                                        drive_Intro.acquire();
                                             }
-                                            //System.out.println(drive_Intro.availablePermits());
-
-
-   
-                                 }
-                      }catch(InterruptedException e){
                                  
-                      }
+                                 }catch(InterruptedException e){
+                                            interrupt();
+                                 }
                       
+                      }
            }
 
-
-           
-           
 }

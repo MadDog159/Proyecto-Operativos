@@ -8,6 +8,8 @@ import interfaz.Inicio_Sistema;
 import interfaz.casaRodaje;
 import static interfaz.casaRodaje.iniciar;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -47,18 +49,38 @@ public class ProjectManager  extends Thread{
                       return sueldo;
            }
            
+           public synchronized void suspender(){
+                      iniciar = true;
+           }
+           public synchronized void reanudar(){
+                      iniciar = false;
+                      notifyAll();
+           }
+           public synchronized void enSuspension(){
+                      while(iniciar){
+                                 try {
+                                            wait();
+                                 } catch (InterruptedException ex) {
+                                            Logger.getLogger(ProductorIntro.class.getName()).log(Level.SEVERE, null, ex);
+                                 }
+                      }
+           }
+           
 
            
 
            @Override
            public void run(){
-                      try{
-                                 while(iniciar){
+                      while(!isInterrupted()){
+                      
+                                 enSuspension();
+                                 
+                                 try{
                                             if(casaRodaje.contador == true){
                                                        drive_Restante.acquire();
                                                        Thread.sleep(166,6);
                                                        casaRodaje.outputPM.setText("Chequeando progreso del dia");
-                                                       dias_restantes -= 1;
+                                                       setDias_restantes(dias_restantes -= 1);
                                                        drive_Restante.release();
                                                        casaRodaje.contador = false;
                                                        trabajando = true;
@@ -83,13 +105,9 @@ public class ProjectManager  extends Thread{
                                                        trabajando = true;
                                                        flojeando = false;
                                             }
-                                 }
-
-                                 
-   
-                                 
-                      }catch(InterruptedException e){
-                                 
+                                 }catch(InterruptedException e){
+                                 interrupt();
+                      }
                       }
                       
            }

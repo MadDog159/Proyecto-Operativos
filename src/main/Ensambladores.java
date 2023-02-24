@@ -6,6 +6,8 @@ package main;
 
 import interfaz.casaRodaje;
 import static interfaz.casaRodaje.iniciar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import main.ProductorIntro;
 
 /**
@@ -60,13 +62,34 @@ public class Ensambladores extends Thread {
            public void capituloCreada(){
                       capitulos += ensambladores;
            }
+           
+           public synchronized void suspender(){
+                      iniciar = true;
+           }
+           public synchronized void reanudar(){
+                      iniciar = false;
+                      notifyAll();
+           }
+           public synchronized void enSuspension(){
+                      while(iniciar){
+                                 try {
+                                            wait();
+                                 } catch (InterruptedException ex) {
+                                            Logger.getLogger(ProductorIntro.class.getName()).log(Level.SEVERE, null, ex);
+                                 }
+                      }
+           }
 
            
            
            @Override
            public void run(){
-                      try{
-                                 while(iniciar){
+                     while(!isInterrupted()){
+                                
+                                enSuspension();
+                                
+                                 try{
+                                 
                                             Thread.sleep(2000);
                                             capCreados =0;
                                                        if(capitulo_creado == true){
@@ -106,11 +129,10 @@ public class Ensambladores extends Thread {
                                             
                                             
                                             
+                                 }catch(InterruptedException e){
+                                            interrupt();
                                  }
-                      }catch(InterruptedException e){
-                                 
-                      }
-                      
+                     }
            }
            
            

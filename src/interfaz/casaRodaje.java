@@ -5,6 +5,8 @@
 package interfaz;
 
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import main.Director;
@@ -24,7 +26,7 @@ import main.ProjectManager;
  * @author epidu
  */
 public class casaRodaje extends javax.swing.JFrame {
-           public static boolean iniciar = true;
+           public static boolean iniciar = false;
            int x = 5;
            int maxEmpleadores = 13;
            double GastosTotales;
@@ -32,6 +34,7 @@ public class casaRodaje extends javax.swing.JFrame {
            int inicio,creditos,cierre,intro,plot,ensamble;       
            public static int parteInicio,parteCreditos,parteCierre,parteIntro,partePlot;
            public static int CapitulosTotales, Ganancia, GananciaNeta, CapitulosSobrantes, DiasFaltantes;
+           int clickInicio;
           
            
            
@@ -56,6 +59,128 @@ public class casaRodaje extends javax.swing.JFrame {
                                  ProjectManager PM = new ProjectManager(drive_Restantes);
                                  Ensambladores Ensamble =  new Ensambladores();
                                  Director Director = new Director(drive_Restantes);
+                                 
+                                 double gastosIntro = pIntro.pagoSueldos();
+                                 double gastosCierre = pCierre.pagoSueldos();
+                                 double gastosCreditos = pCreditos.pagoSueldos();
+                                 double gastosInicio = pInicio.pagoSueldos();
+                                 double gastosPlot = pPlot.pagoSueldos();
+                                 double gastosEnsambladores = pPlot.pagoSueldos();
+                                 double gastosPM = PM.pagoSueldos();
+                                 double gastosDirector = Director.getSueldo();
+                                 
+                                 Thread hilo = new Thread(){
+                                            
+                                            public synchronized void suspender(){
+                                                       iniciar = true;
+                                            }
+                                            public synchronized void reanudar(){
+                                                       iniciar = false;
+                                                       notifyAll();
+                                            }
+                                            public synchronized void enSuspension(){
+                                                       while(iniciar){
+                                                                  try {
+                                                                             System.out.println("entre aqui");
+                                                                             wait();
+                                                                  } catch (InterruptedException ex) {
+                                                                             Logger.getLogger(ProductorIntro.class.getName()).log(Level.SEVERE, null, ex);
+                                                                  }
+                                                       }
+                                            }
+                                            
+                                            
+                                            
+                                            public void run(){
+                                                       if(iniciar == true){
+                                                                  suspender();
+                                                       }else{
+                                                                  reanudar();
+                                                       }
+                                                       while(!isInterrupted()){
+                                                       
+//                                                                  System.out.println(iniciar);
+                                                                  
+//                                                                  System.out.println(iniciar);
+                                                                  enSuspension();
+                                                                  
+                                                                  
+                                                                             
+                                                                             try{
+                                                                                        System.out.println(iniciar);
+                                                                                        maximo();
+                                                                                        minimo();
+                                                                                        outputIntro.setText(Integer.toString(pIntro.drive_Intro.availablePermits()));
+                                                                                        outputCreditos.setText(Integer.toString(pCreditos.drive_Creditos.availablePermits()));
+                                                                                        outputInicio.setText(Integer.toString(pInicio.drive_Inicio.availablePermits()));
+                                                                                        outputCierre.setText(Integer.toString(pCierre.drive_Cierre.availablePermits()));
+                                                                                        outputPlotTwist.setText(Integer.toString(pPlot.drive_PlotTwist.availablePermits()));
+                                                                                        
+                                                                                        GastosTotales += gastosIntro + gastosCierre + gastosCreditos + gastosInicio + gastosPlot + gastosEnsambladores + gastosPM + gastosDirector + faltas;
+                                                                                        outputGastos.setText(Double.toString(GastosTotales ));
+                                                                                        outputCapitulos.setText(Integer.toString(Ensamble.getCapitulos()));
+                                                                                        outputDias_Restantes.setText(Integer.toString(PM.getDias_restantes()));
+                                                                                        saldo += PM.getSueldo();
+                                                                                        outputSalarioPM.setText(Double.toString(saldo));
+                                                                                        outputFaltas.setText(Integer.toString(faltas));
+                                                                                        
+                                                                                        
+                                                                                        parteIntro = Inicio_Sistema.tamanoIntro - pIntro.drive_Intro.availablePermits();
+                                                                                        parteInicio = Inicio_Sistema.tamanoInicio - pInicio.drive_Inicio.availablePermits();
+                                                                                        parteCierre= Inicio_Sistema.tamanoCierre - pCierre.drive_Cierre.availablePermits();
+                                                                                        parteCreditos = Inicio_Sistema.tamanoCreditos - pCreditos.drive_Creditos.availablePermits();
+                                                                                        partePlot = Inicio_Sistema.tamanoPlot - pPlot.drive_PlotTwist.availablePermits();
+                                                                                        
+                                                                                        if(parteIntro > 0 && parteInicio > 0 && parteCierre > 0 && parteCreditos > 0 ){
+                                                                                                   
+                                                                                                   capitulo_creado = true;
+                                                                                                   if((int)Ensamble.getCapitulos() >= x && partePlot >0){
+                                                                                                              capitulo_creadoPlot = true;
+                                                                                                              x += 5;
+                                                                                                              
+                                                                                                   }
+                                                                                        }
+                                                                                        
+                                                                                        for(int i=0; i < Ensamble.getCapCreados();i++){
+                                                                                                   pIntro.reducir();
+                                                                                                   pInicio.reducir();
+                                                                                                   pCierre.reducir();
+                                                                                                   pCreditos.reducir();
+                                                                                                   if(reducir_Plot == true ){
+                                                                                                              pPlot.reducir();
+                                                                                                              reducir_Plot = false;
+                                                                                                   }
+                                                                                                   
+                                                                                        }
+                                                                                        if(PM.getDias_restantes() < Inicio_Sistema.dias_entrega){
+                                                                                                   if(PM.getDias_restantes()%Inicio_Sistema.periodo_temporadas == 0){
+                                                                                                              modelo.addElement(Integer.toString(Ensamble.getCapitulos()));
+                                                                                                              Ensamble.setCapitulos(0);
+                                                                                                   }
+                                                                                        }
+                                                                                        
+                                                                                       
+                                                                                        
+                                                                                        
+                                                                                        
+                                                                                        
+                                                                                        
+                                                                                        
+                                                                                        
+                                                                                        
+                                                                                        
+                                                                                        //System.out.println("disponibilidad: "+ pCierre.drive_Cierre.availablePermits());
+                                                                                        DiasFaltantes = PM.getDias_restantes();
+                                                                                        contador = true;
+                                                                                        Thread.sleep(1000);
+                                                                                        
+                                                                                        }catch(InterruptedException e){
+                                                                                                   interrupt();
+                                                                             
+                                                                  }
+                                                       }
+                                            }
+                                 }; 
            
            
            /**
@@ -74,6 +199,7 @@ public class casaRodaje extends javax.swing.JFrame {
            public boolean maximo(){
                       int usoEmpleadores = inicio + creditos + cierre + intro + plot + ensamble;
                       if ( usoEmpleadores> maxEmpleadores){
+                                 Boton_Parar.doClick();
                                  JOptionPane.showMessageDialog(null,"Maximo de empleadores excedido");
                                  return false;
                       }else{
@@ -82,21 +208,27 @@ public class casaRodaje extends javax.swing.JFrame {
            }
            public boolean minimo(){
                       if ( inicio == 0){
+                                 casaRodaje.Boton_Parar.doClick();
                                  JOptionPane.showMessageDialog(null,"DESPEDIDO, INEFICIENTE, como puedes tener un departamiento sin nadie!!");
                                  return false;
                       }else if (creditos == 0){
+                                 casaRodaje.Boton_Parar.doClick();
                                  JOptionPane.showMessageDialog(null,"DESPEDIDO, INEFICIENTE, como puedes tener un departamiento sin nadie!!");
                                  return false;
                       }else if (cierre == 0){
+                                 casaRodaje.Boton_Parar.doClick();
                                  JOptionPane.showMessageDialog(null,"DESPEDIDO, INEFICIENTE, como puedes tener un departamiento sin nadie!!");
                                  return false;
                       }else if (intro == 0){
+                                 casaRodaje.Boton_Parar.doClick();
                                  JOptionPane.showMessageDialog(null,"DESPEDIDO, INEFICIENTE, como puedes tener un departamiento sin nadie!!");
                                  return false;
                       }else if (plot == 0){
+                                 casaRodaje.Boton_Parar.doClick();
                                  JOptionPane.showMessageDialog(null,"DESPEDIDO, INEFICIENTE, como puedes tener un departamiento sin nadie!!");
                                  return false;
                       }else if(ensamble == 0){
+                                 casaRodaje.Boton_Parar.doClick();
                                  JOptionPane.showMessageDialog(null,"DESPEDIDO, INEFICIENTE, como puedes tener un departamiento sin nadie!!");
                                  return false;
                       }else{
@@ -175,6 +307,7 @@ public class casaRodaje extends javax.swing.JFrame {
                       jScrollPane4 = new javax.swing.JScrollPane();
                       listaTemp = new javax.swing.JList<>();
                       outputGanancias = new javax.swing.JLabel();
+                      jButton1 = new javax.swing.JButton();
 
                       jMenuItem1.setText("jMenuItem1");
 
@@ -286,7 +419,7 @@ public class casaRodaje extends javax.swing.JFrame {
                                             Boton_PararActionPerformed(evt);
                                  }
                       });
-                      getContentPane().add(Boton_Parar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 440, 120, -1));
+                      getContentPane().add(Boton_Parar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 440, 120, -1));
 
                       jLabel15.setText("temporadas");
                       getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, -1, -1));
@@ -294,8 +427,8 @@ public class casaRodaje extends javax.swing.JFrame {
                       jLabel16.setText("capitulos producidos:");
                       getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, -1, -1));
 
-                      jLabel17.setText("Recaudado en ventas:");
-                      getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 130, -1));
+                      jLabel17.setText("Ganancias Netas:");
+                      getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 190, 110, -1));
 
                       jLabel18.setText("Dias por lotes");
                       getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, -1, -1));
@@ -431,19 +564,44 @@ public class casaRodaje extends javax.swing.JFrame {
                       outputGanancias.setText("0");
                       getContentPane().add(outputGanancias, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 190, 60, -1));
 
+                      jButton1.setText("Terminar");
+                      jButton1.addActionListener(new java.awt.event.ActionListener() {
+                                 public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                            jButton1ActionPerformed(evt);
+                                 }
+                      });
+                      getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 440, 120, -1));
+
                       pack();
            }// </editor-fold>//GEN-END:initComponents
 
            private void Boton_PararActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_PararActionPerformed
                       //iniciar = true;
                       //ProductorIntro pIntro = new ProductorIntro();
-                     this.Boton_Parar.setEnabled(false);
-                     Director.GananciasNetas();
-                     outputGanancias.setText(Integer.toString(GananciaNeta));
-                     outputSalarioPM.setText(Double.toString(saldo -=  faltas));
-                     iniciar = false;
+                     
+                     
                      this.Boton_Simulacion.setEnabled(true);
                      
+//                                 pIntro.interrupt();
+//                                 pCreditos.interrupt();
+//                                 pInicio.interrupt();
+//                                 pCierre.interrupt();
+//                                 pPlot.interrupt();
+//                                 Ensamble.interrupt();
+//                                 PM.interrupt();
+//                                 Director.interrupt();
+                                 
+                                 pIntro.suspender();
+                                 pCreditos.suspender();
+                                 pInicio.suspender();
+                                 pCierre.suspender();
+                                 pPlot.suspender();
+                                 Ensamble.suspender();
+                                 PM.suspender();
+                                 Director.suspender();
+                                 hilo.suspend();
+                                 iniciar = true;
+                                 System.out.println(iniciar + "33");
                      
 
                       
@@ -452,8 +610,10 @@ public class casaRodaje extends javax.swing.JFrame {
 
            private void Boton_SimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_SimulacionActionPerformed
                       // TODO add your handling code here:
+                      iniciar = false;
                       boolean continuar =this.maximo();
                       boolean minimo = this.minimo();
+                      
                       
                       if(continuar == false){
                                  
@@ -463,8 +623,8 @@ public class casaRodaje extends javax.swing.JFrame {
                                  
                                  Lista.setModel(modelo);
 
-                                 iniciar = true;
                                  this.Boton_Simulacion.setEnabled(false);
+                                 casaRodaje.Boton_Parar.setEnabled(true);
                                  pIntro.setProductor_Intro((int) Spinner_Intro.getValue());
                                  pCreditos.setProductor_Creditos((int) Spinner_Creditos.getValue());
                                  pInicio.setProductor_Inicio((int) Spinner_Inicio.getValue());
@@ -480,105 +640,43 @@ public class casaRodaje extends javax.swing.JFrame {
                                  pCierre.cierreCreada();
                                  pPlot.plottwistCreada();
                                  
+                                 if(clickInicio == 0){
+                                            System.out.println("Claramente entre aqui q pepa");
+                                            System.out.println("entre");
+                                            pIntro.start();
+                                            pCreditos.start();
+                                            pInicio.start();
+                                            pCierre.start();
+                                            pPlot.start();
+                                            Ensamble.start();
+                                            PM.start();
+                                            Director.start();
+                                            hilo.start();
+                                 }clickInicio ++;
+                                 if(iniciar == false){
+                                            System.out.println(iniciar +"69");
+                                            pIntro.reanudar();
+                                            pCreditos.reanudar();
+                                            pInicio.reanudar();
+                                            pCierre.reanudar();
+                                            pPlot.reanudar();
+                                            Ensamble.reanudar();
+                                            PM.reanudar();
+                                            Director.reanudar();
+                                            hilo.resume();
+                                 }
                                  
-                                 pIntro.start();
-                                 pCreditos.start();
-                                 pInicio.start();
-                                 pCierre.start();
-                                 pPlot.start();
-                                 Ensamble.start();
-                                 PM.start();
-                                 Director.start();
-                                 
-                                 double gastosIntro = pIntro.pagoSueldos();
-                                 double gastosCierre = pCierre.pagoSueldos();
-                                 double gastosCreditos = pCreditos.pagoSueldos();
-                                 double gastosInicio = pInicio.pagoSueldos();
-                                 double gastosPlot = pPlot.pagoSueldos();
-                                 double gastosEnsambladores = pPlot.pagoSueldos();
-                                 double gastosPM = PM.pagoSueldos();
-                                 double gastosDirector = Director.getSueldo();
                                  
                                  
+                                 
+
                                          
-                                 Thread hilo;
-                                 hilo = new Thread(){
-                                            public void run(){
-                                                       while(iniciar){
-                                                                  if(iniciar == true){
-                                                                             try{
-                                                                                        outputIntro.setText(Integer.toString(pIntro.drive_Intro.availablePermits()));
-                                                                                        outputCreditos.setText(Integer.toString(pCreditos.drive_Creditos.availablePermits()));
-                                                                                        outputInicio.setText(Integer.toString(pInicio.drive_Inicio.availablePermits()));
-                                                                                        outputCierre.setText(Integer.toString(pCierre.drive_Cierre.availablePermits()));
-                                                                                        outputPlotTwist.setText(Integer.toString(pPlot.drive_PlotTwist.availablePermits()));
-                                                                                        
-                                                                                        GastosTotales += gastosIntro + gastosCierre + gastosCreditos + gastosInicio + gastosPlot + gastosEnsambladores + gastosPM + gastosDirector + faltas;
-                                                                                        outputGastos.setText(Double.toString(GastosTotales ));
-                                                                                        outputCapitulos.setText(Integer.toString(Ensamble.getCapitulos()));
-                                                                                        outputDias_Restantes.setText(Integer.toString(PM.getDias_restantes()));
-                                                                                        saldo += PM.getSueldo();
-                                                                                        outputSalarioPM.setText(Double.toString(saldo));
-                                                                                        outputFaltas.setText(Integer.toString(faltas));
-                                                                                        
-                                                                                        
-                                                                                        parteIntro = Inicio_Sistema.tamanoIntro - pIntro.drive_Intro.availablePermits();
-                                                                                        parteInicio = Inicio_Sistema.tamanoInicio - pInicio.drive_Inicio.availablePermits();
-                                                                                        parteCierre= Inicio_Sistema.tamanoCierre - pCierre.drive_Cierre.availablePermits();
-                                                                                        parteCreditos = Inicio_Sistema.tamanoCreditos - pCreditos.drive_Creditos.availablePermits();
-                                                                                        partePlot = Inicio_Sistema.tamanoPlot - pPlot.drive_PlotTwist.availablePermits();
-                                                                                        
-                                                                                        if(parteIntro > 0 && parteInicio > 0 && parteCierre > 0 && parteCreditos > 0 ){
-                                                                                                   
-                                                                                                   capitulo_creado = true;
-                                                                                                   if((int)Ensamble.getCapitulos() >= x && partePlot >0){
-                                                                                                              capitulo_creadoPlot = true;
-                                                                                                              x += 5;
-                                                                                                              
-                                                                                                   }
-                                                                                        }
-                                                                                        
-                                                                                        for(int i=0; i < Ensamble.getCapCreados();i++){
-                                                                                                   pIntro.reducir();
-                                                                                                   pInicio.reducir();
-                                                                                                   pCierre.reducir();
-                                                                                                   pCreditos.reducir();
-                                                                                                   if(reducir_Plot == true ){
-                                                                                                              pPlot.reducir();
-                                                                                                              reducir_Plot = false;
-                                                                                                   }
-                                                                                                   
-                                                                                        }
-                                                                                        if(PM.getDias_restantes() < Inicio_Sistema.dias_entrega){
-                                                                                                   if(PM.getDias_restantes()%Inicio_Sistema.periodo_temporadas == 0){
-                                                                                                              modelo.addElement(Integer.toString(Ensamble.getCapitulos()));
-                                                                                                              Ensamble.setCapitulos(0);
-                                                                                                   }
-                                                                                        }
-                                                                                        
-                                                                                       
-                                                                                        
-                                                                                        
-                                                                                        
-                                                                                        
-                                                                                        
-                                                                                        
-                                                                                        
-                                                                                        
-                                                                                        
-                                                                                        //System.out.println("disponibilidad: "+ pCierre.drive_Cierre.availablePermits());
-                                                                                        DiasFaltantes = PM.getDias_restantes();
-                                                                                        contador = true;
-                                                                                        Thread.sleep(1000);
-                                                                                        
-                                                                             }catch(InterruptedException e){
-                                                                                        
-                                                                             }
-                                                                  }
-                                                       }
-                                            }
-                                 };
-hilo.start();
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
                       }
                       
            }//GEN-LAST:event_Boton_SimulacionActionPerformed
@@ -586,32 +684,55 @@ hilo.start();
            private void Spinner_IntroStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_Spinner_IntroStateChanged
                       // TODO add your handling code here:
                       intro = (int) Spinner_Intro.getValue();
+                      casaRodaje.Boton_Parar.doClick();
            }//GEN-LAST:event_Spinner_IntroStateChanged
 
            private void Spinner_CreditosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_Spinner_CreditosStateChanged
                       // TODO add your handling code here:
                       creditos = (int) Spinner_Creditos.getValue();
+                      casaRodaje.Boton_Parar.doClick();
            }//GEN-LAST:event_Spinner_CreditosStateChanged
 
            private void Spinner_InicioStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_Spinner_InicioStateChanged
                       // TODO add your handling code here:
                       inicio = (int) Spinner_Inicio.getValue();
+                      casaRodaje.Boton_Parar.doClick();
            }//GEN-LAST:event_Spinner_InicioStateChanged
 
            private void Spinner_cierreStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_Spinner_cierreStateChanged
                       // TODO add your handling code here:
                       cierre = (int) Spinner_cierre.getValue();
+                      casaRodaje.Boton_Parar.doClick();
            }//GEN-LAST:event_Spinner_cierreStateChanged
 
            private void Spinner_plottwistStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_Spinner_plottwistStateChanged
                       // TODO add your handling code here:
                       plot = (int) Spinner_plottwist.getValue();
+                      casaRodaje.Boton_Parar.doClick();
            }//GEN-LAST:event_Spinner_plottwistStateChanged
 
            private void Spinner_ensambleStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_Spinner_ensambleStateChanged
                       // TODO add your handling code here:
                       ensamble = (int) Spinner_ensamble.getValue();
+                      casaRodaje.Boton_Parar.doClick();
            }//GEN-LAST:event_Spinner_ensambleStateChanged
+
+           private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+                      // TODO add your handling code here:
+                      casaRodaje.Boton_Parar.setEnabled(false);
+                     Director.GananciasNetas();
+                     outputGanancias.setText(Integer.toString(GananciaNeta));
+                     outputSalarioPM.setText(Double.toString(saldo -=  faltas));
+                     
+                                 pIntro.interrupt();
+                                 pCreditos.interrupt();
+                                 pInicio.interrupt();
+                                 pCierre.interrupt();
+                                 pPlot.interrupt();
+                                 Ensamble.interrupt();
+                                 PM.interrupt();
+                                 Director.interrupt();
+           }//GEN-LAST:event_jButton1ActionPerformed
 
            /**
             * @param args the command line arguments
@@ -658,6 +779,7 @@ hilo.start();
            private javax.swing.JSpinner Spinner_cierre;
            private javax.swing.JSpinner Spinner_ensamble;
            private javax.swing.JSpinner Spinner_plottwist;
+           private javax.swing.JButton jButton1;
            private javax.swing.JLabel jLabel1;
            private javax.swing.JLabel jLabel10;
            private javax.swing.JLabel jLabel11;

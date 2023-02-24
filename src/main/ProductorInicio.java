@@ -6,6 +6,8 @@ package main;
 
 import static interfaz.casaRodaje.iniciar;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -59,22 +61,43 @@ public class ProductorInicio  extends Thread{
            public void reducir(){
                       drive_Inicio.release();
            }
+           
+           public synchronized void suspender(){
+                      iniciar = true;
+           }
+           public synchronized void reanudar(){
+                      iniciar = false;
+                      notifyAll();
+           }
+           public synchronized void enSuspension(){
+                      while(iniciar){
+                                 try {
+                                            wait();
+                                 } catch (InterruptedException ex) {
+                                            Logger.getLogger(ProductorIntro.class.getName()).log(Level.SEVERE, null, ex);
+                                 }
+                      }
+           }
 
            
            
            @Override
            public void run(){
-                      try{
-                                 while(iniciar){
+                      while(!isInterrupted()){
+                                 
+                                 enSuspension();
+                                 
+                                 try{
+                                 
                                             Thread.sleep(3000);
                                             int i;
                                             for(i = 0 ; i < inicio; i++){
                                                        drive_Inicio.acquire();
                                             }
                                             
+                                 }catch(InterruptedException e){
+                                            interrupt();
                                  }
-                      }catch(InterruptedException e){
-                                 
                       }
                       
            }

@@ -9,6 +9,8 @@ import interfaz.casaRodaje;
 import static interfaz.casaRodaje.iniciar;
 import static interfaz.casaRodaje.modelo;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -46,11 +48,30 @@ public class Director  extends Thread{
                        casaRodaje.GananciaNeta = casaRodaje.Ganancia - casaRodaje.faltas;
                                                                                         
            }
+           
+           public synchronized void suspender(){
+                      iniciar = true;
+           }
+           public synchronized void reanudar(){
+                      iniciar = false;
+                      notifyAll();
+           }
+           public synchronized void enSuspension(){
+                      while(iniciar){
+                                 try {
+                                            wait();
+                                 } catch (InterruptedException ex) {
+                                            Logger.getLogger(ProductorIntro.class.getName()).log(Level.SEVERE, null, ex);
+                                 }
+                      }
+           }
 
            @Override
            public void run(){
-                      try{
-                                 while(iniciar){
+                      while(!isInterrupted()){
+                                 
+                                 enSuspension();
+                                 try{
                                             reloj_intervalo = (int) (Math.random() * (max_val - min_val));
                                             reloj_periodo = (int) (Math.random() * (max_per - min_per));
                                             
@@ -72,7 +93,7 @@ public class Director  extends Thread{
                                                        drive_Restante.acquire();
                                                        casaRodaje.outputDirector.setText("Revisando Trabajo del Project Manager");
                                                        Thread.sleep(100);
-                                                       System.out.println("termina nojoda");
+                                                       //System.out.println("termina nojoda");
                                                        dias_restantes = casaRodaje.DiasFaltantes;
                                                        if (dias_restantes < 1){
                                                                   casaRodaje.Boton_Parar.doClick();
@@ -81,13 +102,9 @@ public class Director  extends Thread{
                                             }
 
                                             
+                                 }catch(InterruptedException e){
+                                            interrupt();
                                  }
-
-                                 
-   
-                                 
-                      }catch(InterruptedException e){
-                                 
                       }
                       
            }
