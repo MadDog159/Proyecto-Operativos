@@ -126,8 +126,9 @@ public class ArchivoD {
 
         public void setInicEnsambladores(int inicEnsambladores) {
             this.inicEnsambladores = inicEnsambladores;
+        } 
+        
+        public boolean esValido(){
+            return true;
         }
-    
-    
-    
 }
