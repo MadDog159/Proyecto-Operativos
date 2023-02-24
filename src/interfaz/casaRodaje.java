@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
 import main.Director;
 import main.Ensambladores;
 import static main.Ensambladores.capitulo_creado;
@@ -53,6 +54,8 @@ public class casaRodaje extends javax.swing.JFrame {
            public static Semaphore drive_Restantes = new Semaphore(1);
            
            public static DefaultListModel<String> modelo = new DefaultListModel();
+           public static SpinnerNumberModel model = new SpinnerNumberModel();
+           
                                  ProductorIntro pIntro = new ProductorIntro(drive_Intro); 
                                  ProductorCreditos pCreditos = new ProductorCreditos(drive_Creditos); 
                                  ProductorInicio pInicio = new ProductorInicio(drive_Inicio);
@@ -195,6 +198,12 @@ public class casaRodaje extends javax.swing.JFrame {
                       outputMAX.setText(Integer.toString(maxEmpleadores));
                       outputLotes.setText(Integer.toString(Inicio_Sistema.periodo_temporadas));
                       PM.setDias_restantes(Inicio_Sistema.dias_entrega);
+                      Spinner_Intro.setValue(Inicio_Sistema.intro_productores);
+                      Spinner_Inicio.setValue(Inicio_Sistema.inicio_productores);
+                      Spinner_Creditos.setValue(Inicio_Sistema.cierre_productores);
+                      Spinner_cierre.setValue(Inicio_Sistema.creditos_productores);
+                      Spinner_plottwist.setValue(Inicio_Sistema.plot_productores);
+                      Spinner_ensamble.setValue(Inicio_Sistema.ensambladores);
                       this.setLocationRelativeTo(null);
                       this.setResizable(false);
                       
@@ -636,6 +645,8 @@ public class casaRodaje extends javax.swing.JFrame {
                                  
                                  Lista.setModel(modelo);
 
+//                                 Spinner_Intro.setModel(model);
+                                 
                                  
                                  pIntro.setProductor_Intro((int) Spinner_Intro.getValue());
                                  pCreditos.setProductor_Creditos((int) Spinner_Creditos.getValue());

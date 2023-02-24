@@ -4,6 +4,7 @@
  */
 package main;
 
+import interfaz.Inicio_Sistema;
 import interfaz.casaRodaje;
 import static interfaz.casaRodaje.iniciar;
 import java.util.logging.Level;
@@ -90,7 +91,7 @@ public class Ensambladores extends Thread {
                                 
                                  try{
                                  
-                                            Thread.sleep(2000);
+                                            Thread.sleep(Inicio_Sistema.Horas*2);
                                             capCreados =0;
                                                        if(capitulo_creado == true){
                                                                   

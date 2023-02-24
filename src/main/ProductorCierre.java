@@ -4,6 +4,7 @@
  */
 package main;
 
+import interfaz.Inicio_Sistema;
 import static interfaz.casaRodaje.iniciar;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
@@ -88,7 +89,7 @@ public class ProductorCierre  extends Thread{
                                  enSuspension();
                                  
                                  try{
-                                            Thread.sleep(2000);
+                                            Thread.sleep(Inicio_Sistema.Horas*Inicio_Sistema.cedula_Cierre);
                                             int i;
                                             System.out.println(cierre);
                                             for(i = 0 ; i < cierre; i++){

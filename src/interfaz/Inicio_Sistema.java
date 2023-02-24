@@ -18,6 +18,24 @@ public class Inicio_Sistema extends javax.swing.JFrame {
            public static int tamanoPlot;
            public static int dias_entrega;
            public static int periodo_temporadas;
+           public static int Horas;
+           public static int Cedula;
+           public static int cedula;
+           public static int cedula_Intro;
+           public static int cedula_Inicio;
+           public static int cedula_Cierre;
+           public static int cedula_Creditos;
+           public static int cedula_Plot;
+           public static int cedula_PM_contador;
+           public static int cedula_PM_intervalos;
+           public static int inicio_productores;
+           public static int cierre_productores;
+           public static int intro_productores;
+           public static int creditos_productores;
+           public static int plot_productores;
+           public static int ensambladores;
+           
+           
            /**
             * Creates new form Inicio_Sistema
             */
@@ -26,6 +44,38 @@ public class Inicio_Sistema extends javax.swing.JFrame {
                       this.setLocationRelativeTo(null);
                       this.setResizable(false);
            }
+           
+           public void cedula(int Cedula){
+                      if( Cedula>=0  && Cedula < 3){
+                                 cedula_Intro = 1;
+                                 cedula_Inicio = 2;
+                                 cedula_Cierre = 4;
+                                 cedula_Creditos = 4;
+                                 
+                      }else if( Cedula>=3  && Cedula < 6){
+                                 cedula_Intro = 2;
+                                 cedula_Inicio = 3;
+                                 cedula_Cierre = 2;
+                                 cedula_Creditos = 2;
+                                 
+                      }else{
+                                 cedula_Intro = 3;
+                                 cedula_Inicio = 4;
+                                 cedula_Cierre = 3;
+                                 cedula_Creditos = 3;
+                                 
+                      }
+                      if(Cedula>=0  && Cedula < 5){
+                                 cedula_Plot = 2;
+                      }else{
+                                 cedula_Plot = 3;
+                      }
+                      
+                      cedula_PM_contador = 1 + Cedula;
+                      cedula_PM_intervalos = 15 + Cedula;
+                      
+           }
+           
                            
            
 
@@ -108,11 +158,21 @@ public class Inicio_Sistema extends javax.swing.JFrame {
                       // TODO add your handling code here:
                       try{
                                  if(Integer.parseInt(TextField_Dias_de_entrega.getText()) > 0 && Integer.parseInt(TextField_Periodo_de_temporadas.getText()) > 0){
+                                            
                                             tamanoIntro = 999999999;
                                             tamanoCreditos = 999999999;
                                             tamanoInicio = 999999999;
                                             tamanoCierre = 999999999;
                                             tamanoPlot = 999999999;
+                                            Horas = 1000;
+                                            Cedula = 3;
+                                            cedula(Cedula);
+                                            inicio_productores=0;
+                                            cierre_productores=0;
+                                            intro_productores=9;
+                                            creditos_productores=0;
+                                            plot_productores=0;
+                                            ensambladores=0;
                                             dias_entrega = Integer.parseInt(TextField_Dias_de_entrega.getText()); 
                                             periodo_temporadas =Integer.parseInt(TextField_Periodo_de_temporadas.getText());
                                             casaRodaje inicial = new casaRodaje();
@@ -135,6 +195,15 @@ public class Inicio_Sistema extends javax.swing.JFrame {
                                             tamanoInicio = 50;
                                             tamanoCierre = 55;
                                             tamanoPlot = 40;
+                                            Horas = 1000;
+                                            Cedula = 3;
+                                            cedula(Cedula);
+                                            inicio_productores=0;
+                                            cierre_productores=0;
+                                            intro_productores=9;
+                                            creditos_productores=0;
+                                            plot_productores=0;
+                                            ensambladores=0;
                                             dias_entrega = Integer.parseInt(TextField_Dias_de_entrega.getText()); 
                                             periodo_temporadas =Integer.parseInt(TextField_Periodo_de_temporadas.getText());
                                             casaRodaje inicial = new casaRodaje();

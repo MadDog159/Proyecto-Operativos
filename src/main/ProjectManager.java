@@ -78,7 +78,7 @@ public class ProjectManager  extends Thread{
                                  try{
                                             if(casaRodaje.contador == true){
                                                        drive_Restante.acquire();
-                                                       Thread.sleep(166,6);
+                                                       Thread.sleep((Inicio_Sistema.Horas/24)*Inicio_Sistema.cedula_PM_contador);
                                                        casaRodaje.outputPM.setText("Chequeando progreso del dia");
                                                        dias_restantes -= 1;
                                                        drive_Restante.release();
@@ -88,7 +88,7 @@ public class ProjectManager  extends Thread{
 
                                             if (trabajando == true){
                                                        casaRodaje.Rick_Morty = true;
-                                                       Thread.sleep(12,5);
+                                                       Thread.sleep(Inicio_Sistema.Horas/24/60*(15+Inicio_Sistema.cedula_PM_intervalos));
                                                        casaRodaje.outputPM.setText("Viendo Rick y Morty");
                                                        if(casaRodaje.verificar == true){
                                                                   casaRodaje.faltas +=1;
@@ -99,7 +99,7 @@ public class ProjectManager  extends Thread{
                                             }
                                             if(flojeando == true){
                                                        casaRodaje.reviews = true;
-                                                       Thread.sleep(12,5);
+                                                       Thread.sleep(Inicio_Sistema.Horas/24/60*(15+Inicio_Sistema.cedula_PM_intervalos));
                                                        casaRodaje.outputPM.setText("Viendo Reviews");
                                                        casaRodaje.reviews = false;
                                                        trabajando = true;

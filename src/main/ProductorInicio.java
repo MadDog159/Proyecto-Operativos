@@ -4,6 +4,7 @@
  */
 package main;
 
+import interfaz.Inicio_Sistema;
 import static interfaz.casaRodaje.iniciar;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
@@ -89,7 +90,7 @@ public class ProductorInicio  extends Thread{
                                  
                                  try{
                                  
-                                            Thread.sleep(3000);
+                                            Thread.sleep(Inicio_Sistema.Horas*Inicio_Sistema.cedula_Inicio);
                                             int i;
                                             for(i = 0 ; i < inicio; i++){
                                                        drive_Inicio.acquire();

@@ -4,13 +4,15 @@
  */
 package main;
 
-import interfaz.Inicio_Sistema;
+
 import interfaz.casaRodaje;
 import static interfaz.casaRodaje.iniciar;
 import static interfaz.casaRodaje.modelo;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import interfaz.Inicio_Sistema;
+import static interfaz.Inicio_Sistema.Horas;
 
 
 /**
@@ -20,8 +22,8 @@ import java.util.logging.Logger;
 public class Director  extends Thread{
            double sueldo = 100;
            boolean vigilando = true;
-           int min_val = 30, max_val = 90;
-           int min_per = 500, max_per = 750;
+           int min_val = Horas/24/2, max_val = Horas/24/60*90;
+           int min_per = Horas/2, max_per = Horas/24*18;
            int reloj_intervalo;
            int reloj_periodo;
            int dias_restantes;
@@ -92,7 +94,7 @@ public class Director  extends Thread{
                                             }else{                
                                                        drive_Restante.acquire();
                                                        casaRodaje.outputDirector.setText("Revisando Trabajo del Project Manager");
-                                                       Thread.sleep(100);
+                                                       Thread.sleep(Inicio_Sistema.Horas/24);
                                                        //System.out.println("termina nojoda");
                                                        drive_Restante.release();                   
                                             }
