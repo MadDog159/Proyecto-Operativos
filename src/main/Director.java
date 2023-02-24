@@ -45,13 +45,9 @@ public class Director  extends Thread{
            
            public void GananciasNetas(){
                        for(int i = 0; i < casaRodaje.modelo.getSize(); i++){
-                                  System.out.println(modelo.get(i)+" su puta madre");
-                                 casaRodaje.CapitulosTotales  += Integer.parseInt(modelo.get(i));
+                                 casaRodaje.CapitulosTotales  += Integer.parseInt(modelo.getElementAt(i));
                                  }
-                       System.out.println(casaRodaje.CapitulosTotales+"tu mama");
-                       System.out.println(casaRodaje.CapitulosSobrantes+"la tuya");
-                       System.out.println(Audiencia+"malditojava");
-                       Ganancia = (int) ((casaRodaje.CapitulosTotales + casaRodaje.CapitulosSobrantes) * (100000*Audiencia)/150000);
+                       Ganancia = (int) ((casaRodaje.CapitulosTotales + casaRodaje.CapitulosSobrantes) * (Audiencia*100)/150);
                        casaRodaje.GananciaNeta = Ganancia - casaRodaje.faltas;
                                                                                         
            }

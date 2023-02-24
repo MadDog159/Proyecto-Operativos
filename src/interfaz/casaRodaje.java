@@ -23,6 +23,15 @@ import main.ProductorIntro;
 import main.ProductorPlotTwist;
 import main.ProjectManager;
 import static main.ProjectManager.dias_restantes;
+        
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.util.List;
+
+
 
 /**
  *
@@ -174,17 +183,6 @@ public class casaRodaje extends javax.swing.JFrame {
                                                                                                    stop();
                                                                                         }
                                                                                         
-                                                                                       
-                                                                                        
-                                                                                        
-                                                                                        
-                                                                                        
-                                                                                        
-                                                                                        
-                                                                                        
-                                                                                        
-                                                                                        
-                                                                                        
                                                                                         contador = true;
                                                                                         Thread.sleep(Horas);
                                                                                         
@@ -200,8 +198,25 @@ public class casaRodaje extends javax.swing.JFrame {
            /**
             * Creates new form casaRodaje
             */
-           public casaRodaje() {
-                      initComponents();
+            private int maxDriveCierre;
+            private int duracionDias;
+            private int diasEntreLanzamientos;
+            private int maxDriveCreditos;
+            private int maxDriveInicio;
+            private int maxDriveIntro;
+            private int maxDrivePlotTwist;
+            private int inicProdCierre;
+            private int inicProdCreditos;
+            private int inicProdInicio;
+            private int inicProdIntro;
+            private int inicProdPlotTwist;    
+            private int inicEnsambladores;
+            
+           public casaRodaje(int maxDriveCierre, int diasEntreLanzamientos, int duracionDias, int inicProdCierre, int inicProdCreditos,
+                            int inicProdInicio, int inicProdIntro, int inicProdPlotTwist, int maxDriveCreditos, int maxDriveInicio,
+                            int maxDriveIntro, int maxDrivePlotTwist, int inicEnsambladores) {
+               super();       
+               initComponents();
                       outputMAX.setText(Integer.toString(maxEmpleadores));
                       outputLotes.setText(Integer.toString(Inicio_Sistema.periodo_temporadas));
                       PM.setDias_restantes(Inicio_Sistema.dias_entrega);
@@ -213,9 +228,38 @@ public class casaRodaje extends javax.swing.JFrame {
                       Spinner_ensamble.setValue(Inicio_Sistema.ensambladores);
                       this.Boton_Simulacion.setEnabled(false);
                       this.setLocationRelativeTo(null);
+//<<<<<<< HEAD
                       this.setResizable(true);
                       
                       
+//=======
+                      this.setResizable(false);
+                      this.maxDriveCierre = maxDriveCierre;
+                    this.duracionDias = duracionDias;
+                    this.diasEntreLanzamientos = diasEntreLanzamientos;
+                    this.maxDriveCreditos = maxDriveCreditos;
+                    this.maxDriveInicio = maxDriveInicio;
+                    this.maxDriveIntro = maxDriveIntro;
+                    this.maxDrivePlotTwist = maxDrivePlotTwist;
+                    this.inicProdCierre = inicProdCierre;
+                    this.inicProdCreditos = inicProdCreditos;
+                    this.inicProdInicio = inicProdInicio;
+                    this.inicProdIntro = inicProdIntro;
+                    this.inicProdPlotTwist = inicProdPlotTwist;
+                    this.inicEnsambladores = inicEnsambladores;
+                    Spinner_Intro.setValue(inicProdIntro);
+                    Spinner_Creditos.setValue(inicProdCreditos);
+                    Spinner_Inicio.setValue(inicProdInicio);
+                    Spinner_cierre.setValue(inicProdCierre);
+                    Spinner_plottwist.setValue(inicProdPlotTwist);
+                    Spinner_ensamble.setValue(inicEnsambladores);
+                    /*System.out.println("esto es max drive cierre " + this.maxDriveCierre);
+                    System.out.println("esto es duracion de dias " + this.duracionDias);
+                    System.out.println("esto es inicProdIntro " + this.inicProdIntro);
+                    System.out.println("esto es inic ensamb " + this.inicEnsambladores);*/
+                    
+   
+//>>>>>>> a9a343c2090b2717e092a5af0cca5881dd4b8bc3
            }
            
            
@@ -649,7 +693,23 @@ public class casaRodaje extends javax.swing.JFrame {
                                  
 //                                 System.out.println(iniciar + "33");
                      
+                        String path = "/app/json/companies.json";
+ 
+                        JSONObject json = new JSONObject();
+                        try {
+                            json.put("name", "Google");
+                            json.put("employees", 140000);
+                            json.put("offices", List.of("Mountain View", "Los Angeles", "New York"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
+                        try (PrintWriter out = new PrintWriter(new FileWriter(path))) {
+                            out.write(json.toString());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+    
                       
                    
            }//GEN-LAST:event_Boton_PararActionPerformed
@@ -771,7 +831,7 @@ public class casaRodaje extends javax.swing.JFrame {
                       // TODO add your handling code here:
                      this.Boton_Terminar.setEnabled(false);
                      Director.GananciasNetas();
-                     outputGanancias.setText(Integer.toString(GananciaNeta));
+                     outputGanancias.setText(Integer.toString(GananciaNeta)+"000");
                      outputSalarioPM.setText(Double.toString(saldo -=  faltas));
                                  
                                  if(clickInicio > 0){
@@ -799,7 +859,7 @@ public class casaRodaje extends javax.swing.JFrame {
            private void Boton_GOTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_GOTActionPerformed
                       // TODO add your handling code here:
                       outputTitulo.setText("Casa Rodaje Game of Thrones");
-                      Audiencia = 980000;
+                      Audiencia = 980;
                       Ensamble.setIntro(1);
                       Ensamble.setInicio(1);
                       Ensamble.setCierre(2);
@@ -811,7 +871,7 @@ public class casaRodaje extends javax.swing.JFrame {
            private void Boton_VelmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_VelmaActionPerformed
                       // TODO add your handling code here:
                       outputTitulo.setText("Casa Rodaje Velma");
-                      Audiencia = 950000;
+                      Audiencia = 950;
                       Ensamble.setIntro(2);
                       Ensamble.setInicio(1);
                       Ensamble.setCierre(1);
@@ -849,7 +909,9 @@ public class casaRodaje extends javax.swing.JFrame {
                       /* Create and display the form */
                       java.awt.EventQueue.invokeLater(new Runnable() {
                                  public void run() {
-                                            new casaRodaje().setVisible(true);
+                                    /*new casaRodaje(this.maxDriveCierre, this.diasEntreLanzamientos, this.duracionDias, this.inicProdCierre, this.inicProdCreditos,
+                                            this.inicProdInicio, this.inicProdIntro, this.inicProdPlotTwist, this.maxDriveCierre, this.maxDriveCreditos, this.maxDriveInicio,
+                                            this.maxDriveIntro, this.maxDrivePlotTwist).setVisible(true);*/
                                  }
                       });
            }

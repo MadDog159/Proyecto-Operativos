@@ -1,0 +1,15 @@
+{
+"duracionDias":1,
+"diasEntreLanzamientos":2,
+"maxDriveCierre":55,
+"maxDriveCreditos":25,
+"maxDriveInicio":50,
+"maxDriveIntro":30,
+"maxDrivePlotTwist":40,
+"inicProdCierre": 1,
+"inicProdCreditos":1,
+"inicProdInicio":1,
+"inicProdIntro":1,
+"inicProdPlotTwist":1,    
+"inicEnsambladores":0
+}
