@@ -25,8 +25,8 @@ import main.ProjectManager;
 import static main.ProjectManager.dias_restantes;
         
 
-import org.json.JSONException;
-import org.json.JSONObject;
+//import org.json.JSONException;
+//import org.json.JSONObject;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.List;
@@ -41,7 +41,6 @@ public class casaRodaje extends javax.swing.JFrame {
            
            public static boolean iniciar = false;
            int x = 5;
-           int maxEmpleadores = 13;
            double GastosTotales;
            double saldo;
            int inicio,creditos,cierre,intro,plot,ensamble;       
@@ -217,7 +216,7 @@ public class casaRodaje extends javax.swing.JFrame {
                             int maxDriveIntro, int maxDrivePlotTwist, int inicEnsambladores) {
                super();       
                initComponents();
-                      outputMAX.setText(Integer.toString(maxEmpleadores));
+                      outputMAX.setText(Integer.toString(Inicio_Sistema.maxEmpleadores));
                       outputLotes.setText(Integer.toString(Inicio_Sistema.periodo_temporadas));
                       PM.setDias_restantes(Inicio_Sistema.dias_entrega);
                       Spinner_Intro.setValue(Inicio_Sistema.intro_productores);
@@ -265,7 +264,7 @@ public class casaRodaje extends javax.swing.JFrame {
            
            public boolean maximo(){
                       int usoEmpleadores = inicio + creditos + cierre + intro + plot + ensamble;
-                      if ( usoEmpleadores> maxEmpleadores){
+                      if ( usoEmpleadores> Inicio_Sistema.maxEmpleadores){
                                  Boton_Parar.doClick();
                                  JOptionPane.showMessageDialog(null,"Maximo de empleadores excedido");
                                  return false;
@@ -695,20 +694,20 @@ public class casaRodaje extends javax.swing.JFrame {
                      
                         String path = "/app/json/companies.json";
  
-                        JSONObject json = new JSONObject();
-                        try {
-                            json.put("name", "Google");
-                            json.put("employees", 140000);
-                            json.put("offices", List.of("Mountain View", "Los Angeles", "New York"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        try (PrintWriter out = new PrintWriter(new FileWriter(path))) {
-                            out.write(json.toString());
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+//                        JSONObject json = new JSONObject();
+//                        try {
+//                            json.put("name", "Google");
+//                            json.put("employees", 140000);
+//                            json.put("offices", List.of("Mountain View", "Los Angeles", "New York"));
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        try (PrintWriter out = new PrintWriter(new FileWriter(path))) {
+//                            out.write(json.toString());
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
     
                       
                    
@@ -830,6 +829,7 @@ public class casaRodaje extends javax.swing.JFrame {
            private void Boton_TerminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_TerminarActionPerformed
                       // TODO add your handling code here:
                      this.Boton_Terminar.setEnabled(false);
+                     this.Boton_Simulacion.setEnabled(true);
                      Director.GananciasNetas();
                      outputGanancias.setText(Integer.toString(GananciaNeta)+"000");
                      outputSalarioPM.setText(Double.toString(saldo -=  faltas));
@@ -845,15 +845,39 @@ public class casaRodaje extends javax.swing.JFrame {
                                             Director.suspender();
                                             hilo.suspend();
                                  }
+                      outputMAX.setText(Integer.toString(Inicio_Sistema.maxEmpleadores));
+                      outputLotes.setText(Integer.toString(Inicio_Sistema.periodo_temporadas));
+                      PM.setDias_restantes(Inicio_Sistema.dias_entrega);
+                      Spinner_Intro.setValue(Inicio_Sistema.intro_productores);
+                      Spinner_Inicio.setValue(Inicio_Sistema.inicio_productores);
+                      Spinner_Creditos.setValue(Inicio_Sistema.cierre_productores);
+                      Spinner_cierre.setValue(Inicio_Sistema.creditos_productores);
+                      Spinner_plottwist.setValue(Inicio_Sistema.plot_productores);
+                      Spinner_ensamble.setValue(Inicio_Sistema.ensambladores);
+                      faltas = 0;
+                      GananciaNeta = 0;
+                      GastosTotales = 0;
+                      CapitulosSobrantes = 0;
+                      saldo =0;
+                      pIntro.drive_Intro.release(parteIntro);
+                      pCreditos.drive_Creditos.release(parteCreditos);
+                      pInicio.drive_Inicio.release(parteInicio);
+                      pCierre.drive_Cierre.release(parteCierre);
+                      pPlot.drive_PlotTwist.release(partePlot);
+                      modelo.removeAllElements();
+                      
+
+                      this.setLocationRelativeTo(null);
+                                 
                      
-                                 pIntro.interrupt();
-                                 pCreditos.interrupt();
-                                 pInicio.interrupt();
-                                 pCierre.interrupt();
-                                 pPlot.interrupt();
-                                 Ensamble.interrupt();
-                                 PM.interrupt();
-                                 Director.interrupt();
+//                                 pIntro.interrupt();
+//                                 pCreditos.interrupt();
+//                                 pInicio.interrupt();
+//                                 pCierre.interrupt();
+//                                 pPlot.interrupt();
+//                                 Ensamble.interrupt();
+//                                 PM.interrupt();
+//                                 Director.interrupt();
            }//GEN-LAST:event_Boton_TerminarActionPerformed
 
            private void Boton_GOTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_GOTActionPerformed

@@ -38,6 +38,7 @@ public class Inicio_Sistema extends javax.swing.JFrame {
            public static int creditos_productores;
            public static int plot_productores;
            public static int ensambladores;
+           public static int maxEmpleadores;
            
            
            /**
@@ -77,6 +78,7 @@ public class Inicio_Sistema extends javax.swing.JFrame {
                       
                       cedula_PM_contador = 1 + Cedula;
                       cedula_PM_intervalos = 15 + Cedula;
+                      maxEmpleadores = 10 + Cedula;
                       
            }
            
