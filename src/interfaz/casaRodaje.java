@@ -20,12 +20,14 @@ import main.ProductorInicio;
 import main.ProductorIntro;
 import main.ProductorPlotTwist;
 import main.ProjectManager;
+import static main.ProjectManager.dias_restantes;
 
 /**
  *
  * @author epidu
  */
 public class casaRodaje extends javax.swing.JFrame {
+           
            public static boolean iniciar = false;
            int x = 5;
            int maxEmpleadores = 13;
@@ -69,45 +71,46 @@ public class casaRodaje extends javax.swing.JFrame {
                                  double gastosPM = PM.pagoSueldos();
                                  double gastosDirector = Director.getSueldo();
                                  
+                                 
                                  Thread hilo = new Thread(){
-                                            
-                                            public synchronized void suspender(){
-                                                       iniciar = true;
-                                            }
-                                            public synchronized void reanudar(){
-                                                       iniciar = false;
-                                                       notifyAll();
-                                            }
-                                            public synchronized void enSuspension(){
-                                                       while(iniciar){
-                                                                  try {
-                                                                             System.out.println("entre aqui");
-                                                                             wait();
-                                                                  } catch (InterruptedException ex) {
-                                                                             Logger.getLogger(ProductorIntro.class.getName()).log(Level.SEVERE, null, ex);
-                                                                  }
-                                                       }
-                                            }
-                                            
+//                                            
+//                                            public synchronized void suspender(){
+//                                                       iniciar = true;
+//                                            }
+//                                            public synchronized void reanudar(){
+//                                                       iniciar = false;
+//                                                       notifyAll();
+//                                            }
+//                                            public synchronized void enSuspension(){
+//                                                       while(iniciar){
+//                                                                  try {
+////                                                                             System.out.println("entre aqui");
+//                                                                             wait();
+//                                                                  } catch (InterruptedException ex) {
+//                                                                             Logger.getLogger(ProductorIntro.class.getName()).log(Level.SEVERE, null, ex);
+//                                                                  }
+//                                                       }
+//                                            }
+//                                            
                                             
                                             
                                             public void run(){
-                                                       if(iniciar == true){
-                                                                  suspender();
-                                                       }else{
-                                                                  reanudar();
-                                                       }
+//                                                       if(iniciar == true){
+//                                                                  suspender();
+//                                                       }else{
+//                                                                  reanudar();
+//                                                       }
                                                        while(!isInterrupted()){
                                                        
 //                                                                  System.out.println(iniciar);
                                                                   
 //                                                                  System.out.println(iniciar);
-                                                                  enSuspension();
+//                                                                  enSuspension();
                                                                   
                                                                   
                                                                              
                                                                              try{
-                                                                                        System.out.println(iniciar);
+//                                                                                        System.out.println(iniciar);
                                                                                         maximo();
                                                                                         minimo();
                                                                                         outputIntro.setText(Integer.toString(pIntro.drive_Intro.availablePermits()));
@@ -119,7 +122,8 @@ public class casaRodaje extends javax.swing.JFrame {
                                                                                         GastosTotales += gastosIntro + gastosCierre + gastosCreditos + gastosInicio + gastosPlot + gastosEnsambladores + gastosPM + gastosDirector + faltas;
                                                                                         outputGastos.setText(Double.toString(GastosTotales ));
                                                                                         outputCapitulos.setText(Integer.toString(Ensamble.getCapitulos()));
-                                                                                        outputDias_Restantes.setText(Integer.toString(PM.getDias_restantes()));
+                                                                                        
+                                                                                        outputDias_Restantes.setText(Integer.toString(dias_restantes));
                                                                                         saldo += PM.getSueldo();
                                                                                         outputSalarioPM.setText(Double.toString(saldo));
                                                                                         outputFaltas.setText(Integer.toString(faltas));
@@ -170,7 +174,7 @@ public class casaRodaje extends javax.swing.JFrame {
                                                                                         
                                                                                         
                                                                                         //System.out.println("disponibilidad: "+ pCierre.drive_Cierre.availablePermits());
-                                                                                        DiasFaltantes = PM.getDias_restantes();
+//                                                                                        DiasFaltantes = PM.getDias_restantes();
                                                                                         contador = true;
                                                                                         Thread.sleep(1000);
                                                                                         
@@ -190,8 +194,10 @@ public class casaRodaje extends javax.swing.JFrame {
                       initComponents();
                       outputMAX.setText(Integer.toString(maxEmpleadores));
                       outputLotes.setText(Integer.toString(Inicio_Sistema.periodo_temporadas));
+                      PM.setDias_restantes(Inicio_Sistema.dias_entrega);
                       this.setLocationRelativeTo(null);
                       this.setResizable(false);
+                      
                       
            }
            
@@ -208,27 +214,27 @@ public class casaRodaje extends javax.swing.JFrame {
            }
            public boolean minimo(){
                       if ( inicio == 0){
-                                 casaRodaje.Boton_Parar.doClick();
+                                 this.Boton_Parar.doClick();
                                  JOptionPane.showMessageDialog(null,"DESPEDIDO, INEFICIENTE, como puedes tener un departamiento sin nadie!!");
                                  return false;
                       }else if (creditos == 0){
-                                 casaRodaje.Boton_Parar.doClick();
+                                 this.Boton_Parar.doClick();
                                  JOptionPane.showMessageDialog(null,"DESPEDIDO, INEFICIENTE, como puedes tener un departamiento sin nadie!!");
                                  return false;
                       }else if (cierre == 0){
-                                 casaRodaje.Boton_Parar.doClick();
+                                 this.Boton_Parar.doClick();
                                  JOptionPane.showMessageDialog(null,"DESPEDIDO, INEFICIENTE, como puedes tener un departamiento sin nadie!!");
                                  return false;
                       }else if (intro == 0){
-                                 casaRodaje.Boton_Parar.doClick();
+                                 this.Boton_Parar.doClick();
                                  JOptionPane.showMessageDialog(null,"DESPEDIDO, INEFICIENTE, como puedes tener un departamiento sin nadie!!");
                                  return false;
                       }else if (plot == 0){
-                                 casaRodaje.Boton_Parar.doClick();
+                                 this.Boton_Parar.doClick();
                                  JOptionPane.showMessageDialog(null,"DESPEDIDO, INEFICIENTE, como puedes tener un departamiento sin nadie!!");
                                  return false;
                       }else if(ensamble == 0){
-                                 casaRodaje.Boton_Parar.doClick();
+                                 this.Boton_Parar.doClick();
                                  JOptionPane.showMessageDialog(null,"DESPEDIDO, INEFICIENTE, como puedes tener un departamiento sin nadie!!");
                                  return false;
                       }else{
@@ -578,9 +584,11 @@ public class casaRodaje extends javax.swing.JFrame {
            private void Boton_PararActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_PararActionPerformed
                       //iniciar = true;
                       //ProductorIntro pIntro = new ProductorIntro();
-                     
+                      this.Boton_Parar.setEnabled(false);
                      
                      this.Boton_Simulacion.setEnabled(true);
+                      System.out.println("q cono");
+                      System.out.println(iniciar);       
                      
 //                                 pIntro.interrupt();
 //                                 pCreditos.interrupt();
@@ -591,17 +599,20 @@ public class casaRodaje extends javax.swing.JFrame {
 //                                 PM.interrupt();
 //                                 Director.interrupt();
                                  
-                                 pIntro.suspender();
-                                 pCreditos.suspender();
-                                 pInicio.suspender();
-                                 pCierre.suspender();
-                                 pPlot.suspender();
-                                 Ensamble.suspender();
-                                 PM.suspender();
-                                 Director.suspender();
-                                 hilo.suspend();
-                                 iniciar = true;
-                                 System.out.println(iniciar + "33");
+                                 if(clickInicio > 0){
+                                            pIntro.suspender();
+                                            pCreditos.suspender();
+                                            pInicio.suspender();
+                                            pCierre.suspender();
+                                            pPlot.suspender();
+                                            Ensamble.suspender();
+                                            PM.suspender();
+                                            Director.suspender();
+                                            hilo.suspend();
+                                            iniciar = true;
+                                 }
+                                 
+//                                 System.out.println(iniciar + "33");
                      
 
                       
@@ -611,6 +622,8 @@ public class casaRodaje extends javax.swing.JFrame {
            private void Boton_SimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_SimulacionActionPerformed
                       // TODO add your handling code here:
                       iniciar = false;
+                      this.Boton_Simulacion.setEnabled(false);
+                      this.Boton_Parar.setEnabled(true);
                       boolean continuar =this.maximo();
                       boolean minimo = this.minimo();
                       
@@ -623,15 +636,14 @@ public class casaRodaje extends javax.swing.JFrame {
                                  
                                  Lista.setModel(modelo);
 
-                                 this.Boton_Simulacion.setEnabled(false);
-                                 casaRodaje.Boton_Parar.setEnabled(true);
+                                 
                                  pIntro.setProductor_Intro((int) Spinner_Intro.getValue());
                                  pCreditos.setProductor_Creditos((int) Spinner_Creditos.getValue());
                                  pInicio.setProductor_Inicio((int) Spinner_Inicio.getValue());
                                  pCierre.setProductor_cierre((int) Spinner_cierre.getValue());
                                  pPlot.setProductor_plottwist((int) Spinner_plottwist.getValue());
                                  Ensamble.setEnsambladores((int) Spinner_ensamble.getValue());
-                                 PM.setDias_restantes(Inicio_Sistema.dias_entrega);
+                                 
                                  
                                  
                                  pIntro.introCreada();
@@ -641,7 +653,8 @@ public class casaRodaje extends javax.swing.JFrame {
                                  pPlot.plottwistCreada();
                                  
                                  if(clickInicio == 0){
-                                            System.out.println("Claramente entre aqui q pepa");
+//                                            System.out.println("Claramente entre aqui q pepa");
+                                            
                                             System.out.println("entre");
                                             pIntro.start();
                                             pCreditos.start();
@@ -653,8 +666,8 @@ public class casaRodaje extends javax.swing.JFrame {
                                             Director.start();
                                             hilo.start();
                                  }clickInicio ++;
-                                 if(iniciar == false){
-                                            System.out.println(iniciar +"69");
+                                 if(iniciar == false && clickInicio > 0){
+//                                            System.out.println(iniciar +"69");
                                             pIntro.reanudar();
                                             pCreditos.reanudar();
                                             pInicio.reanudar();
@@ -684,42 +697,42 @@ public class casaRodaje extends javax.swing.JFrame {
            private void Spinner_IntroStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_Spinner_IntroStateChanged
                       // TODO add your handling code here:
                       intro = (int) Spinner_Intro.getValue();
-                      casaRodaje.Boton_Parar.doClick();
+                      this.Boton_Parar.doClick();
            }//GEN-LAST:event_Spinner_IntroStateChanged
 
            private void Spinner_CreditosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_Spinner_CreditosStateChanged
                       // TODO add your handling code here:
                       creditos = (int) Spinner_Creditos.getValue();
-                      casaRodaje.Boton_Parar.doClick();
+                      this.Boton_Parar.doClick();
            }//GEN-LAST:event_Spinner_CreditosStateChanged
 
            private void Spinner_InicioStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_Spinner_InicioStateChanged
                       // TODO add your handling code here:
                       inicio = (int) Spinner_Inicio.getValue();
-                      casaRodaje.Boton_Parar.doClick();
+                      this.Boton_Parar.doClick();
            }//GEN-LAST:event_Spinner_InicioStateChanged
 
            private void Spinner_cierreStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_Spinner_cierreStateChanged
                       // TODO add your handling code here:
                       cierre = (int) Spinner_cierre.getValue();
-                      casaRodaje.Boton_Parar.doClick();
+                      this.Boton_Parar.doClick();
            }//GEN-LAST:event_Spinner_cierreStateChanged
 
            private void Spinner_plottwistStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_Spinner_plottwistStateChanged
                       // TODO add your handling code here:
                       plot = (int) Spinner_plottwist.getValue();
-                      casaRodaje.Boton_Parar.doClick();
+                      this.Boton_Parar.doClick();
            }//GEN-LAST:event_Spinner_plottwistStateChanged
 
            private void Spinner_ensambleStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_Spinner_ensambleStateChanged
                       // TODO add your handling code here:
                       ensamble = (int) Spinner_ensamble.getValue();
-                      casaRodaje.Boton_Parar.doClick();
+                      this.Boton_Parar.doClick();
            }//GEN-LAST:event_Spinner_ensambleStateChanged
 
            private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
                       // TODO add your handling code here:
-                      casaRodaje.Boton_Parar.setEnabled(false);
+                     this.Boton_Parar.setEnabled(false);
                      Director.GananciasNetas();
                      outputGanancias.setText(Integer.toString(GananciaNeta));
                      outputSalarioPM.setText(Double.toString(saldo -=  faltas));
@@ -770,7 +783,7 @@ public class casaRodaje extends javax.swing.JFrame {
            }
 
            // Variables declaration - do not modify//GEN-BEGIN:variables
-           public static javax.swing.JButton Boton_Parar;
+           private javax.swing.JButton Boton_Parar;
            private javax.swing.JButton Boton_Simulacion;
            private javax.swing.JList<String> Lista;
            private javax.swing.JSpinner Spinner_Creditos;

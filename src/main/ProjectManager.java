@@ -80,7 +80,7 @@ public class ProjectManager  extends Thread{
                                                        drive_Restante.acquire();
                                                        Thread.sleep(166,6);
                                                        casaRodaje.outputPM.setText("Chequeando progreso del dia");
-                                                       setDias_restantes(dias_restantes -= 1);
+                                                       dias_restantes -= 1;
                                                        drive_Restante.release();
                                                        casaRodaje.contador = false;
                                                        trabajando = true;

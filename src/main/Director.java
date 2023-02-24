@@ -94,10 +94,6 @@ public class Director  extends Thread{
                                                        casaRodaje.outputDirector.setText("Revisando Trabajo del Project Manager");
                                                        Thread.sleep(100);
                                                        //System.out.println("termina nojoda");
-                                                       dias_restantes = casaRodaje.DiasFaltantes;
-                                                       if (dias_restantes < 1){
-                                                                  casaRodaje.Boton_Parar.doClick();
-                                                       }
                                                        drive_Restante.release();                   
                                             }
 
