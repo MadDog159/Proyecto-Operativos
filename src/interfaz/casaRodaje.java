@@ -845,39 +845,40 @@ public class casaRodaje extends javax.swing.JFrame {
                                             Director.suspender();
                                             hilo.suspend();
                                  }
-                      outputMAX.setText(Integer.toString(Inicio_Sistema.maxEmpleadores));
-                      outputLotes.setText(Integer.toString(Inicio_Sistema.periodo_temporadas));
-                      PM.setDias_restantes(Inicio_Sistema.dias_entrega);
-                      Spinner_Intro.setValue(Inicio_Sistema.intro_productores);
-                      Spinner_Inicio.setValue(Inicio_Sistema.inicio_productores);
-                      Spinner_Creditos.setValue(Inicio_Sistema.cierre_productores);
-                      Spinner_cierre.setValue(Inicio_Sistema.creditos_productores);
-                      Spinner_plottwist.setValue(Inicio_Sistema.plot_productores);
-                      Spinner_ensamble.setValue(Inicio_Sistema.ensambladores);
-                      faltas = 0;
-                      GananciaNeta = 0;
-                      GastosTotales = 0;
-                      CapitulosSobrantes = 0;
-                      saldo =0;
-                      pIntro.drive_Intro.release(parteIntro);
-                      pCreditos.drive_Creditos.release(parteCreditos);
-                      pInicio.drive_Inicio.release(parteInicio);
-                      pCierre.drive_Cierre.release(parteCierre);
-                      pPlot.drive_PlotTwist.release(partePlot);
-                      modelo.removeAllElements();
-                      
-
-                      this.setLocationRelativeTo(null);
+//                      outputMAX.setText(Integer.toString(Inicio_Sistema.maxEmpleadores));
+//                      outputLotes.setText(Integer.toString(Inicio_Sistema.periodo_temporadas));
+//                      PM.setDias_restantes(Inicio_Sistema.dias_entrega);
+//                      Spinner_Intro.setValue(Inicio_Sistema.intro_productores);
+//                      Spinner_Inicio.setValue(Inicio_Sistema.inicio_productores);
+//                      Spinner_Creditos.setValue(Inicio_Sistema.cierre_productores);
+//                      Spinner_cierre.setValue(Inicio_Sistema.creditos_productores);
+//                      Spinner_plottwist.setValue(Inicio_Sistema.plot_productores);
+//                      Spinner_ensamble.setValue(Inicio_Sistema.ensambladores);
+//                      faltas = 0;
+//                      GananciaNeta = 0;
+//                      GastosTotales = 0;
+//                      CapitulosSobrantes = 0;
+//                      saldo =0;
+//                      pIntro.drive_Intro.release(parteIntro);
+//                      pCreditos.drive_Creditos.release(parteCreditos);
+//                      pInicio.drive_Inicio.release(parteInicio);
+//                      pCierre.drive_Cierre.release(parteCierre);
+//                      pPlot.drive_PlotTwist.release(partePlot);
+//                      modelo.removeAllElements();
+//                      
+//
+//                      this.setLocationRelativeTo(null);
                                  
                      
-//                                 pIntro.interrupt();
-//                                 pCreditos.interrupt();
-//                                 pInicio.interrupt();
-//                                 pCierre.interrupt();
-//                                 pPlot.interrupt();
-//                                 Ensamble.interrupt();
-//                                 PM.interrupt();
-//                                 Director.interrupt();
+                                 pIntro.interrupt();
+                                 pCreditos.interrupt();
+                                 pInicio.interrupt();
+                                 pCierre.interrupt();
+                                 pPlot.interrupt();
+                                 Ensamble.interrupt();
+                                 PM.interrupt();
+                                 Director.interrupt();
+                                 hilo.interrupt();
            }//GEN-LAST:event_Boton_TerminarActionPerformed
 
            private void Boton_GOTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_GOTActionPerformed
