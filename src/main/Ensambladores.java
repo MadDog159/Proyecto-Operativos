@@ -5,6 +5,7 @@
 package main;
 
 import interfaz.casaRodaje;
+import static interfaz.casaRodaje.iniciar;
 import main.ProductorIntro;
 
 /**
@@ -65,7 +66,7 @@ public class Ensambladores extends Thread {
            @Override
            public void run(){
                       try{
-                                 while(true){
+                                 while(iniciar){
                                             Thread.sleep(2000);
                                             capCreados =0;
                                                        if(capitulo_creado == true){
@@ -75,13 +76,13 @@ public class Ensambladores extends Thread {
                                                                                         casaRodaje.parteIntro --;
                                                                                         if(casaRodaje.parteInicio > 0){
                                                                                                    casaRodaje.parteInicio --;
-                                                                                                   if(casaRodaje.parteCierre > 0){
-                                                                                                              casaRodaje.parteCierre --;
+                                                                                                   if(casaRodaje.parteCierre > 1){
+                                                                                                              casaRodaje.parteCierre -=2;
                                                                                                               if(casaRodaje.parteCreditos > 0){
                                                                                                                          casaRodaje.parteCreditos--;
                                                                                                                          
-                                                                                                                         if(casaRodaje.partePlot > 0 && capitulo_creadoPlot == true){
-                                                                                                                                    casaRodaje.partePlot--;
+                                                                                                                         if(casaRodaje.partePlot > 1 && capitulo_creadoPlot == true){
+                                                                                                                                    casaRodaje.partePlot -=2;
                                                                                                                                     capitulos += 1;
                                                                                                                                     capCreados ++;
                                                                                                                                     capitulo_creadoPlot = false;

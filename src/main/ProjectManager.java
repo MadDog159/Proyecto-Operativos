@@ -6,6 +6,7 @@ package main;
 
 import interfaz.Inicio_Sistema;
 import interfaz.casaRodaje;
+import static interfaz.casaRodaje.iniciar;
 import java.util.concurrent.Semaphore;
 
 
@@ -52,7 +53,7 @@ public class ProjectManager  extends Thread{
            @Override
            public void run(){
                       try{
-                                 while(true){
+                                 while(iniciar){
                                             if(casaRodaje.contador == true){
                                                        drive_Restante.acquire();
                                                        Thread.sleep(166,6);
@@ -67,6 +68,9 @@ public class ProjectManager  extends Thread{
                                                        casaRodaje.Rick_Morty = true;
                                                        Thread.sleep(12,5);
                                                        casaRodaje.outputPM.setText("Viendo Rick y Morty");
+                                                       if(casaRodaje.verificar == true){
+                                                                  casaRodaje.faltas +=1;
+                                                       }
                                                        casaRodaje.Rick_Morty = false;
                                                        trabajando = false;
                                                        flojeando = true;

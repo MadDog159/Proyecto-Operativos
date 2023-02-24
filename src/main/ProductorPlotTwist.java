@@ -4,6 +4,7 @@
  */
 package main;
 
+import static interfaz.casaRodaje.iniciar;
 import java.util.concurrent.Semaphore;
 
 
@@ -55,7 +56,7 @@ public class ProductorPlotTwist  extends Thread{
            }
            
            public void reducir(){
-                      drive_PlotTwist.release();
+                      drive_PlotTwist.release(2);
            }
 
            
@@ -63,7 +64,7 @@ public class ProductorPlotTwist  extends Thread{
            @Override
            public void run(){
                       try{
-                                 while(true){
+                                 while(iniciar){
                                             Thread.sleep(2000);
                                             int i;
                                             for(i = 0 ; i < plottwist; i++){

@@ -4,6 +4,7 @@
  */
 package main;
 
+import static interfaz.casaRodaje.iniciar;
 import java.util.concurrent.Semaphore;
 
 
@@ -63,7 +64,7 @@ public class ProductorCreditos  extends Thread{
            @Override
            public void run(){
                       try{
-                                 while(true){
+                                 while(iniciar){
                                             Thread.sleep(500);
                                             int i;
                                             for(i = 0 ; i < creditos; i++){

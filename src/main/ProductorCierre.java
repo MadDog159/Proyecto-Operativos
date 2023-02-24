@@ -4,6 +4,7 @@
  */
 package main;
 
+import static interfaz.casaRodaje.iniciar;
 import java.util.concurrent.Semaphore;
 
 
@@ -56,7 +57,7 @@ public class ProductorCierre  extends Thread{
            }
            
            public void reducir(){
-                      drive_Cierre.release();
+                      drive_Cierre.release(2);
            }
 
            
@@ -64,7 +65,7 @@ public class ProductorCierre  extends Thread{
            @Override
            public void run(){
                       try{
-                                 while(true){
+                                 while(iniciar){
                                             Thread.sleep(2000);
                                             int i;
                                             System.out.println(cierre);

@@ -4,6 +4,7 @@
  */
 package main;
 
+import static interfaz.casaRodaje.iniciar;
 import java.util.concurrent.Semaphore;
 import static main.Ensambladores.capitulo_creado;
 
@@ -60,13 +61,14 @@ public class ProductorIntro  extends Thread{
            public  void reducir(){
                       drive_Intro.release();
            }
-
            
-           
+           /**
+            *
+            */
            @Override
            public void run(){
                       try{
-                                 while(true){
+                                 while(iniciar){
                                             Thread.sleep(500);
                                             int i;
                                             for(i = 0 ; i < intros; i++){
