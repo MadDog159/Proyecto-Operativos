@@ -4,7 +4,11 @@
  */
 package main;
 
+import interfaz.Inicio_Sistema;
+import static interfaz.casaRodaje.iniciar;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -55,25 +59,45 @@ public class ProductorPlotTwist  extends Thread{
            }
            
            public void reducir(){
-                      drive_PlotTwist.release();
+                      drive_PlotTwist.release(2);
+           }
+           public synchronized void suspender(){
+                      iniciar = true;
+           }
+           public synchronized void reanudar(){
+                      iniciar = false;
+                      notifyAll();
+           }
+           public synchronized void enSuspension(){
+                      while(iniciar){
+                                 try {
+                                            wait();
+                                 } catch (InterruptedException ex) {
+                                            Logger.getLogger(ProductorIntro.class.getName()).log(Level.SEVERE, null, ex);
+                                 }
+                      }
            }
 
            
            
            @Override
            public void run(){
-                      try{
-                                 while(true){
-                                            Thread.sleep(2000);
+                      while(!isInterrupted()){
+                                 
+                                 enSuspension();
+                                 
+                                 try{
+                                 
+                                            Thread.sleep(Inicio_Sistema.Horas*Inicio_Sistema.cedula_Plot);
                                             int i;
                                             for(i = 0 ; i < plottwist; i++){
                                                        drive_PlotTwist.acquire();
                                             }
                                             //System.out.println(drive_PlotTwist.availablePermits());
                                             
+                                 }catch(InterruptedException e){
+                                            interrupt();
                                  }
-                      }catch(InterruptedException e){
-                                 
                       }
                       
            }

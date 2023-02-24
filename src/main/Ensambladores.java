@@ -4,7 +4,11 @@
  */
 package main;
 
+import interfaz.Inicio_Sistema;
 import interfaz.casaRodaje;
+import static interfaz.casaRodaje.iniciar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import main.ProductorIntro;
 
 /**
@@ -59,14 +63,35 @@ public class Ensambladores extends Thread {
            public void capituloCreada(){
                       capitulos += ensambladores;
            }
+           
+           public synchronized void suspender(){
+                      iniciar = true;
+           }
+           public synchronized void reanudar(){
+                      iniciar = false;
+                      notifyAll();
+           }
+           public synchronized void enSuspension(){
+                      while(iniciar){
+                                 try {
+                                            wait();
+                                 } catch (InterruptedException ex) {
+                                            Logger.getLogger(ProductorIntro.class.getName()).log(Level.SEVERE, null, ex);
+                                 }
+                      }
+           }
 
            
            
            @Override
            public void run(){
-                      try{
-                                 while(true){
-                                            Thread.sleep(2000);
+                     while(!isInterrupted()){
+                                
+                                enSuspension();
+                                
+                                 try{
+                                 
+                                            Thread.sleep(Inicio_Sistema.Horas*2);
                                             capCreados =0;
                                                        if(capitulo_creado == true){
                                                                   
@@ -75,13 +100,13 @@ public class Ensambladores extends Thread {
                                                                                         casaRodaje.parteIntro --;
                                                                                         if(casaRodaje.parteInicio > 0){
                                                                                                    casaRodaje.parteInicio --;
-                                                                                                   if(casaRodaje.parteCierre > 0){
-                                                                                                              casaRodaje.parteCierre --;
+                                                                                                   if(casaRodaje.parteCierre > 1){
+                                                                                                              casaRodaje.parteCierre -=2;
                                                                                                               if(casaRodaje.parteCreditos > 0){
                                                                                                                          casaRodaje.parteCreditos--;
                                                                                                                          
-                                                                                                                         if(casaRodaje.partePlot > 0 && capitulo_creadoPlot == true){
-                                                                                                                                    casaRodaje.partePlot--;
+                                                                                                                         if(casaRodaje.partePlot > 1 && capitulo_creadoPlot == true){
+                                                                                                                                    casaRodaje.partePlot -=2;
                                                                                                                                     capitulos += 1;
                                                                                                                                     capCreados ++;
                                                                                                                                     capitulo_creadoPlot = false;
@@ -105,11 +130,10 @@ public class Ensambladores extends Thread {
                                             
                                             
                                             
+                                 }catch(InterruptedException e){
+                                            interrupt();
                                  }
-                      }catch(InterruptedException e){
-                                 
-                      }
-                      
+                     }
            }
            
            

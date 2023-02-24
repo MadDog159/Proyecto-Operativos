@@ -4,7 +4,11 @@
  */
 package main;
 
+import interfaz.Inicio_Sistema;
+import static interfaz.casaRodaje.iniciar;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -59,24 +63,40 @@ public class ProductorCreditos  extends Thread{
                       drive_Creditos.release();
            }
            
+           public synchronized void suspender(){
+                      iniciar = true;
+           }
+           public synchronized void reanudar(){
+                      iniciar = false;
+                      notifyAll();
+           }
+           public synchronized void enSuspension(){
+                      while(iniciar){
+                                 try {
+                                            wait();
+                                 } catch (InterruptedException ex) {
+                                            Logger.getLogger(ProductorIntro.class.getName()).log(Level.SEVERE, null, ex);
+                                 }
+                      }
+           }
+           
            
            @Override
            public void run(){
-                      try{
-                                 while(true){
-                                            Thread.sleep(500);
+                      while(!isInterrupted()){
+                                 
+                                 enSuspension();
+                                 
+                                  try{
+                                            Thread.sleep(Inicio_Sistema.Horas/Inicio_Sistema.cedula_Creditos);
                                             int i;
                                             for(i = 0 ; i < creditos; i++){
                                                        drive_Creditos.acquire();
                                             }
-                                            
-                                            
-                                            
+                                 }catch(InterruptedException e){
+                                            interrupt();
                                  }
-                      }catch(InterruptedException e){
-                                 
                       }
-                      
            }
 
 

@@ -25,6 +25,7 @@ public class main {
                      // hola.start();
                  //     hola.introCreada();
                       
+                      
                       Inicio_Sistema inicio = new Inicio_Sistema();
                       inicio.setVisible(true);
                       

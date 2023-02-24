@@ -6,7 +6,10 @@ package main;
 
 import interfaz.Inicio_Sistema;
 import interfaz.casaRodaje;
+import static interfaz.casaRodaje.iniciar;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -15,7 +18,7 @@ import java.util.concurrent.Semaphore;
  */
 public class ProjectManager  extends Thread{
            double sueldo;
-           int dias_restantes;
+           public static int dias_restantes;
            boolean trabajando;
            boolean flojeando;
            public Semaphore drive_Restante;
@@ -46,16 +49,36 @@ public class ProjectManager  extends Thread{
                       return sueldo;
            }
            
+           public synchronized void suspender(){
+                      iniciar = true;
+           }
+           public synchronized void reanudar(){
+                      iniciar = false;
+                      notifyAll();
+           }
+           public synchronized void enSuspension(){
+                      while(iniciar){
+                                 try {
+                                            wait();
+                                 } catch (InterruptedException ex) {
+                                            Logger.getLogger(ProductorIntro.class.getName()).log(Level.SEVERE, null, ex);
+                                 }
+                      }
+           }
+           
 
            
 
            @Override
            public void run(){
-                      try{
-                                 while(true){
+                      while(!isInterrupted()){
+                      
+                                 enSuspension();
+                                 
+                                 try{
                                             if(casaRodaje.contador == true){
                                                        drive_Restante.acquire();
-                                                       Thread.sleep(166,6);
+                                                       Thread.sleep((Inicio_Sistema.Horas/24)*Inicio_Sistema.cedula_PM_contador);
                                                        casaRodaje.outputPM.setText("Chequeando progreso del dia");
                                                        dias_restantes -= 1;
                                                        drive_Restante.release();
@@ -65,27 +88,26 @@ public class ProjectManager  extends Thread{
 
                                             if (trabajando == true){
                                                        casaRodaje.Rick_Morty = true;
-                                                       Thread.sleep(12,5);
+                                                       Thread.sleep(Inicio_Sistema.Horas/24/60*(15+Inicio_Sistema.cedula_PM_intervalos));
                                                        casaRodaje.outputPM.setText("Viendo Rick y Morty");
+                                                       if(casaRodaje.verificar == true){
+                                                                  casaRodaje.faltas +=1;
+                                                       }
                                                        casaRodaje.Rick_Morty = false;
                                                        trabajando = false;
                                                        flojeando = true;
                                             }
                                             if(flojeando == true){
                                                        casaRodaje.reviews = true;
-                                                       Thread.sleep(12,5);
+                                                       Thread.sleep(Inicio_Sistema.Horas/24/60*(15+Inicio_Sistema.cedula_PM_intervalos));
                                                        casaRodaje.outputPM.setText("Viendo Reviews");
                                                        casaRodaje.reviews = false;
                                                        trabajando = true;
                                                        flojeando = false;
                                             }
-                                 }
-
-                                 
-   
-                                 
-                      }catch(InterruptedException e){
-                                 
+                                 }catch(InterruptedException e){
+                                 interrupt();
+                      }
                       }
                       
            }
