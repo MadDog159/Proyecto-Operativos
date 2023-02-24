@@ -22,6 +22,12 @@ import main.ProductorIntro;
 import main.ProductorPlotTwist;
 import main.ProjectManager;
 import static main.ProjectManager.dias_restantes;
+        
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.util.List;
 
 
 
@@ -244,10 +250,10 @@ public class casaRodaje extends javax.swing.JFrame {
                     Spinner_cierre.setValue(inicProdCierre);
                     Spinner_plottwist.setValue(inicProdPlotTwist);
                     Spinner_ensamble.setValue(inicEnsambladores);
-                    System.out.println("esto es max drive cierreÑ " + this.maxDriveCierre);
+                    /*System.out.println("esto es max drive cierre " + this.maxDriveCierre);
                     System.out.println("esto es duracion de dias " + this.duracionDias);
                     System.out.println("esto es inicProdIntro " + this.inicProdIntro);
-                    System.out.println("esto es inic ensamb " + this.inicEnsambladores);
+                    System.out.println("esto es inic ensamb " + this.inicEnsambladores);*/
                     
    
            }
@@ -665,7 +671,23 @@ public class casaRodaje extends javax.swing.JFrame {
                                  
 //                                 System.out.println(iniciar + "33");
                      
+                        String path = "/app/json/companies.json";
+ 
+                        JSONObject json = new JSONObject();
+                        try {
+                            json.put("name", "Google");
+                            json.put("employees", 140000);
+                            json.put("offices", List.of("Mountain View", "Los Angeles", "New York"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
+                        try (PrintWriter out = new PrintWriter(new FileWriter(path))) {
+                            out.write(json.toString());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+    
                       
                    
            }//GEN-LAST:event_Boton_PararActionPerformed
